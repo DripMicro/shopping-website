@@ -200,6 +200,7 @@ $route[getr('admin', $rts) . '/update-slider-item/(:num)'] = 'admin_controller/u
 $route[getr('admin', $rts) . '/update-pre-type/(:num)'] = 'admin_controller/update_pre_type/$1';
 $route[getr('admin', $rts) . '/update-pre-categories/(:num)'] = 'admin_controller/update_pre_categories/$1';
 $route[getr('admin', $rts) . '/update-pre-materials/(:num)'] = 'admin_controller/update_pre_materials/$1';
+$route[getr('admin', $rts) . '/update-pre-orientations/(:num)'] = 'admin_controller/update_pre_orientations/$1';
 
 /*page routes*/
 $route[getr('admin', $rts)] = 'admin_controller/index';

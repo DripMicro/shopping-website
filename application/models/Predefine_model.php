@@ -181,6 +181,52 @@ class Predefine_model extends CI_Model
 
     // -------------------------------------------
 
+     //  ---------------------------------------------------
+
+    //add orientations name
+    public function add_orientations_post($orientations)
+    {
+        $data = array(
+            'orientations' => $orientations,
+        );
+        $this->db->insert('ad_predefine_orientations', $data);
+    }
+    //get predefine orientations
+	public function get_orientations()
+	{
+		$query = $this->db->get('ad_predefine_orientations');
+		return $query->result();
+	}
+
+    //get orientations item
+    public function get_orientations_item($id)
+    {
+        $id = clean_number($id);
+        $this->db->where('id', $id);
+        $query = $this->db->get('ad_predefine_orientations');
+        return $query->row();
+    }
+
+    //update orientations item
+    public function update_orientations_item($id)
+    {
+        $data = array(
+            'orientations' => $this->input->post('add_orientations', true),
+        );
+
+        $this->db->where('id', $id);
+        return $this->db->update('ad_predefine_orientations', $data);
+    }
+
+    //delete orientations item
+    public function delete_orientations_item($id)
+    {
+        $id = clean_number($id);
+        $this->db->where('id', $id);
+        return $this->db->delete('ad_predefine_orientations');
+    }
+
+    // -------------------------------------------
 
 	//get contact message
 	public function get_contact_message($id)

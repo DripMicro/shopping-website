@@ -114,6 +114,7 @@ class Admin_controller extends Admin_Core_Controller
         $data['pre_types'] = $this->predefine_model->get_type();
         $data['pre_categories'] = $this->predefine_model->get_categories();
         $data['pre_materials'] = $this->predefine_model->get_materials();
+        $data['pre_orientations'] = $this->predefine_model->get_orientations();
         $this->load->view('admin/includes/_header', $data);
         $this->load->view('admin/predefine/predefine', $data);
         $this->load->view('admin/includes/_footer');
@@ -302,6 +303,68 @@ class Admin_controller extends Admin_Core_Controller
 
     //  --------------------------------------
 
+
+    // -----------------------------------------------------------------------------------------
+
+/*
+    * Predefine Setting add orientations Post
+    */
+    public function predefine_setting_add_orientations_post()
+    {
+        $orientations = $this->input->post('add_orientations', true);
+        $this->predefine_model->add_orientations_post($orientations);
+        $this->session->set_flashdata('success', trans("msg_updated"));
+        $this->session->set_flashdata('msg_settings', 1);
+        redirect($this->agent->referrer());
+    }
+
+    /**
+     * Update Predefine orientations
+     */
+    public function update_pre_orientations($id)
+    {
+        $data['title'] = trans("orientations");
+        //get item
+        $data['item'] = $this->predefine_model->get_orientations_item($id);
+
+        if (empty($data['item'])) {
+            redirect($this->agent->referrer());
+        }
+        $this->load->view('admin/includes/_header', $data);
+        $this->load->view('admin/predefine/update_orientations', $data);
+        $this->load->view('admin/includes/_footer');
+    }
+
+    /**
+     * Update orientations Item Post
+     */
+    public function update_orientations_item_post()
+    {
+        //item id
+        $id = $this->input->post('id', true);
+        if ($this->predefine_model->update_orientations_item($id)) {
+            $this->session->set_flashdata('success', trans("msg_updated"));
+            redirect(admin_url() . 'predefine-settings');
+        } else {
+            $this->session->set_flashdata('error', trans("msg_error"));
+            redirect($this->agent->referrer());
+        }
+    }
+
+    /**
+     * Delete orientations Item Post
+     */
+    public function delete_orientations_item_post()
+    {
+        $id = $this->input->post('id', true);
+        if ($this->predefine_model->delete_orientations_item($id)) {
+            $this->session->set_flashdata('success', trans("msg_item_deleted"));
+        } else {
+            $this->session->set_flashdata('error', trans("msg_error"));
+        }
+    }
+
+    //  --------------------------------------
 
     /*
     * Homepage Manager Settings Post
