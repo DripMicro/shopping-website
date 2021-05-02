@@ -78,22 +78,7 @@ class Admin_controller extends Admin_Core_Controller
         $this->load->view('admin/homepage_manager/homepage_manager', $data);
         $this->load->view('admin/includes/_footer');
     }
-    
-    /*
-    * Predefine Setting
-    */
-    public function predefine_setting()
-    {
-        $data['title'] = trans("predefine_setting");
-        $data['parent_categories'] = $this->category_model->get_parent_categories();
-        $data['featured_categories'] = $this->category_model->get_featured_categories();
-        $data['index_categories'] = $this->category_model->get_index_categories();
-        $data['index_banners'] = $this->ad_model->get_index_banners_back_end();
-        
-        $this->load->view('admin/includes/_header', $data);
-        $this->load->view('admin/homepage_manager/homepage_manager', $data);
-        $this->load->view('admin/includes/_footer');
-    }
+
 
     /*
     * Homepage Manager Post
@@ -117,6 +102,206 @@ class Admin_controller extends Admin_Core_Controller
             redirect($this->agent->referrer());
         }
     }
+
+    // -----------------------------------------------------------------------------------------
+        
+    /*
+    * Predefine Setting
+    */
+    public function predefine_setting()
+    {
+        $data['title'] = trans("predefine_setting");
+        $data['pre_types'] = $this->predefine_model->get_type();
+        $data['pre_categories'] = $this->predefine_model->get_categories();
+        $data['pre_materials'] = $this->predefine_model->get_materials();
+        $this->load->view('admin/includes/_header', $data);
+        $this->load->view('admin/predefine/predefine', $data);
+        $this->load->view('admin/includes/_footer');
+    }
+
+    /*
+    * Predefine Setting add type Post
+    */
+    public function predefine_setting_add_type_post()
+    {
+        $type = $this->input->post('add_type', true);
+        $this->predefine_model->add_type_post($type);
+        $this->session->set_flashdata('success', trans("msg_updated"));
+        $this->session->set_flashdata('msg_settings', 1);
+        redirect($this->agent->referrer());
+    }
+
+    /**
+     * Update Predefine Type
+     */
+    public function update_pre_type($id)
+    {
+        $data['title'] = trans("type");
+        //get item
+        $data['item'] = $this->predefine_model->get_type_item($id);
+
+        if (empty($data['item'])) {
+            redirect($this->agent->referrer());
+        }
+        $this->load->view('admin/includes/_header', $data);
+        $this->load->view('admin/predefine/update_type', $data);
+        $this->load->view('admin/includes/_footer');
+    }
+
+    /**
+     * Update Type Item Post
+     */
+    public function update_type_item_post()
+    {
+        //item id
+        $id = $this->input->post('id', true);
+        if ($this->predefine_model->update_type_item($id)) {
+            $this->session->set_flashdata('success', trans("msg_updated"));
+            redirect(admin_url() . 'predefine-settings');
+        } else {
+            $this->session->set_flashdata('error', trans("msg_error"));
+            redirect($this->agent->referrer());
+        }
+    }
+
+    /**
+     * Delete Type Item Post
+     */
+    public function delete_type_item_post()
+    {
+        $id = $this->input->post('id', true);
+        if ($this->predefine_model->delete_type_item($id)) {
+            $this->session->set_flashdata('success', trans("msg_item_deleted"));
+        } else {
+            $this->session->set_flashdata('error', trans("msg_error"));
+        }
+    }
+
+// -----------------------------------------------------------------------------------------
+
+/*
+    * Predefine Setting add categories Post
+    */
+    public function predefine_setting_add_categories_post()
+    {
+        $categories = $this->input->post('add_categories', true);
+        $this->predefine_model->add_categories_post($categories);
+        $this->session->set_flashdata('success', trans("msg_updated"));
+        $this->session->set_flashdata('msg_settings', 1);
+        redirect($this->agent->referrer());
+    }
+
+    /**
+     * Update Predefine categories
+     */
+    public function update_pre_categories($id)
+    {
+        $data['title'] = trans("categories");
+        //get item
+        $data['item'] = $this->predefine_model->get_categories_item($id);
+
+        if (empty($data['item'])) {
+            redirect($this->agent->referrer());
+        }
+        $this->load->view('admin/includes/_header', $data);
+        $this->load->view('admin/predefine/update_categories', $data);
+        $this->load->view('admin/includes/_footer');
+    }
+
+    /**
+     * Update categories Item Post
+     */
+    public function update_categories_item_post()
+    {
+        //item id
+        $id = $this->input->post('id', true);
+        if ($this->predefine_model->update_categories_item($id)) {
+            $this->session->set_flashdata('success', trans("msg_updated"));
+            redirect(admin_url() . 'predefine-settings');
+        } else {
+            $this->session->set_flashdata('error', trans("msg_error"));
+            redirect($this->agent->referrer());
+        }
+    }
+
+    /**
+     * Delete categories Item Post
+     */
+    public function delete_categories_item_post()
+    {
+        $id = $this->input->post('id', true);
+        if ($this->predefine_model->delete_categories_item($id)) {
+            $this->session->set_flashdata('success', trans("msg_item_deleted"));
+        } else {
+            $this->session->set_flashdata('error', trans("msg_error"));
+        }
+    }
+
+    //  --------------------------------------
+
+    // -----------------------------------------------------------------------------------------
+
+/*
+    * Predefine Setting add materials Post
+    */
+    public function predefine_setting_add_materials_post()
+    {
+        $materials = $this->input->post('add_materials', true);
+        $price = $this->input->post('add_price', true);
+        $this->predefine_model->add_materials_post($materials, $price);
+        $this->session->set_flashdata('success', trans("msg_updated"));
+        $this->session->set_flashdata('msg_settings', 1);
+        redirect($this->agent->referrer());
+    }
+
+    /**
+     * Update Predefine materials
+     */
+    public function update_pre_materials($id)
+    {
+        $data['title'] = trans("materials");
+        //get item
+        $data['item'] = $this->predefine_model->get_materials_item($id);
+
+        if (empty($data['item'])) {
+            redirect($this->agent->referrer());
+        }
+        $this->load->view('admin/includes/_header', $data);
+        $this->load->view('admin/predefine/update_materials', $data);
+        $this->load->view('admin/includes/_footer');
+    }
+
+    /**
+     * Update materials Item Post
+     */
+    public function update_materials_item_post()
+    {
+        //item id
+        $id = $this->input->post('id', true);
+        if ($this->predefine_model->update_materials_item($id)) {
+            $this->session->set_flashdata('success', trans("msg_updated"));
+            redirect(admin_url() . 'predefine-settings');
+        } else {
+            $this->session->set_flashdata('error', trans("msg_error"));
+            redirect($this->agent->referrer());
+        }
+    }
+
+    /**
+     * Delete materials Item Post
+     */
+    public function delete_materials_item_post()
+    {
+        $id = $this->input->post('id', true);
+        if ($this->predefine_model->delete_materials_item($id)) {
+            $this->session->set_flashdata('success', trans("msg_item_deleted"));
+        } else {
+            $this->session->set_flashdata('error', trans("msg_error"));
+        }
+    }
+
+    //  --------------------------------------
+
 
     /*
     * Homepage Manager Settings Post

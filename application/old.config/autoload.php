@@ -136,4 +136,4 @@ $autoload['model'] = array('settings_model', 'language_model', 'auth_model', 'ca
     'product_model', 'product_admin_model', 'blog_category_model', 'blog_model', 'profile_model', 'slider_model', 'review_model',
     'comment_model', 'message_model', 'tag_model', 'newsletter_model', 'contact_model', 'location_model', 'ad_model',
     'field_model', 'cart_model', 'order_model', 'currency_model', 'transaction_model', 'promote_model', 'order_admin_model', 'earnings_model',
-    'earnings_admin_model', 'variation_model', 'membership_model', 'shipping_model');
+    'earnings_admin_model', 'variation_model', 'membership_model', 'shipping_model', 'predefine_model');

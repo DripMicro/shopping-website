@@ -195,6 +195,12 @@ $route[getr('admin', $rts) . '/edit-banner/(:num)'] = 'admin_controller/edit_ind
 /*slider routes*/
 $route[getr('admin', $rts) . '/slider'] = 'admin_controller/slider';
 $route[getr('admin', $rts) . '/update-slider-item/(:num)'] = 'admin_controller/update_slider_item/$1';
+
+/*predefine routes*/
+$route[getr('admin', $rts) . '/update-pre-type/(:num)'] = 'admin_controller/update_pre_type/$1';
+$route[getr('admin', $rts) . '/update-pre-categories/(:num)'] = 'admin_controller/update_pre_categories/$1';
+$route[getr('admin', $rts) . '/update-pre-materials/(:num)'] = 'admin_controller/update_pre_materials/$1';
+
 /*page routes*/
 $route[getr('admin', $rts)] = 'admin_controller/index';
 $route[getr('admin', $rts) . '/settings'] = 'admin_controller/settings';
