@@ -103,6 +103,27 @@ class Admin_controller extends Admin_Core_Controller
         }
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     // -----------------------------------------------------------------------------------------
         
     /*
@@ -116,6 +137,7 @@ class Admin_controller extends Admin_Core_Controller
         $data['pre_materials'] = $this->predefine_model->get_materials();
         $data['pre_orientations'] = $this->predefine_model->get_orientations();
         $data['pre_printsizes'] = $this->predefine_model->get_printsizes();
+        $data['pre_finishoptions'] = $this->predefine_model->get_finishoptions();
         $this->load->view('admin/includes/_header', $data);
         $this->load->view('admin/predefine/predefine', $data);
         $this->load->view('admin/includes/_footer');
@@ -435,7 +457,68 @@ class Admin_controller extends Admin_Core_Controller
 
     //  --------------------------------------
 
+// -----------------------------------------------------------------------------------------
 
+/*
+    * Predefine Setting add finishoptions Post
+    */
+    public function predefine_setting_add_finishoptions_post()
+    {
+        $finishoptions = $this->input->post('add_finishoptions', true);
+        $price = $this->input->post('add_price', true);
+        $this->predefine_model->add_finishoptions_post($finishoptions, $price);
+        $this->session->set_flashdata('success', trans("msg_updated"));
+        $this->session->set_flashdata('msg_settings', 1);
+        redirect($this->agent->referrer());
+    }
+
+    /**
+     * Update Predefine finishoptions
+     */
+    public function update_pre_finishoptions($id)
+    {
+        $data['title'] = trans("pre_finish_options");
+        //get item
+        $data['item'] = $this->predefine_model->get_finishoptions_item($id);
+
+        if (empty($data['item'])) {
+            redirect($this->agent->referrer());
+        }
+        $this->load->view('admin/includes/_header', $data);
+        $this->load->view('admin/predefine/update_finishoptions', $data);
+        $this->load->view('admin/includes/_footer');
+    }
+
+    /**
+     * Update finishoptions Item Post
+     */
+    public function update_finishoptions_item_post()
+    {
+        //item id
+        $id = $this->input->post('id', true);
+        if ($this->predefine_model->update_finishoptions_item($id)) {
+            $this->session->set_flashdata('success', trans("msg_updated"));
+            redirect(admin_url() . 'predefine-settings');
+        } else {
+            $this->session->set_flashdata('error', trans("msg_error"));
+            redirect($this->agent->referrer());
+        }
+    }
+
+    /**
+     * Delete finishoptions Item Post
+     */
+    public function delete_finishoptions_item_post()
+    {
+        $id = $this->input->post('id', true);
+        if ($this->predefine_model->delete_finishoptions_item($id)) {
+            $this->session->set_flashdata('success', trans("msg_item_deleted"));
+        } else {
+            $this->session->set_flashdata('error', trans("msg_error"));
+        }
+    }
+
+    //  --------------------------------------
 
     /*
     * Homepage Manager Settings Post

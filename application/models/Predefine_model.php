@@ -283,6 +283,55 @@ class Predefine_model extends CI_Model
     // -------------------------------------------
 
 
+    //  ---------------------------------------------------
+
+    //add finishoptions name
+    public function add_finishoptions_post($finishoptions, $price)
+    {
+        $data = array(
+            'finishoptions' => $finishoptions,
+            'price' => $price,
+        );
+        $this->db->insert('ad_predefine_finishoptions', $data);
+    }
+    //get predefine finishoptions
+	public function get_finishoptions()
+	{
+		$query = $this->db->get('ad_predefine_finishoptions');
+		return $query->result();
+	}
+
+    //get finishoptions item
+    public function get_finishoptions_item($id)
+    {
+        $id = clean_number($id);
+        $this->db->where('id', $id);
+        $query = $this->db->get('ad_predefine_finishoptions');
+        return $query->row();
+    }
+
+    //update finishoptions item
+    public function update_finishoptions_item($id)
+    {
+        $data = array(
+            'finishoptions' => $this->input->post('add_finishoptions', true),
+            'price' => $this->input->post('add_price', true),
+        );
+
+        $this->db->where('id', $id);
+        return $this->db->update('ad_predefine_finishoptions', $data);
+    }
+
+    //delete finishoptions item
+    public function delete_finishoptions_item($id)
+    {
+        $id = clean_number($id);
+        $this->db->where('id', $id);
+        return $this->db->delete('ad_predefine_finishoptions');
+    }
+
+    // -------------------------------------------
+
 
 	//get contact message
 	public function get_contact_message($id)
