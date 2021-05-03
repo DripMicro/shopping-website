@@ -333,6 +333,56 @@ class Predefine_model extends CI_Model
     // -------------------------------------------
 
 
+    //  ---------------------------------------------------
+
+    //add canvasdepths name
+    public function add_canvasdepths_post($canvasdepths, $price)
+    {
+        $data = array(
+            'canvasdepths' => $canvasdepths,
+            'price' => $price,
+        );
+        $this->db->insert('ad_predefine_canvasdepths', $data);
+    }
+    //get predefine canvasdepths
+	public function get_canvasdepths()
+	{
+		$query = $this->db->get('ad_predefine_canvasdepths');
+		return $query->result();
+	}
+
+    //get canvasdepths item
+    public function get_canvasdepths_item($id)
+    {
+        $id = clean_number($id);
+        $this->db->where('id', $id);
+        $query = $this->db->get('ad_predefine_canvasdepths');
+        return $query->row();
+    }
+
+    //update canvasdepths item
+    public function update_canvasdepths_item($id)
+    {
+        $data = array(
+            'canvasdepths' => $this->input->post('add_canvasdepths', true),
+            'price' => $this->input->post('add_price', true),
+        );
+
+        $this->db->where('id', $id);
+        return $this->db->update('ad_predefine_canvasdepths', $data);
+    }
+
+    //delete canvasdepths item
+    public function delete_canvasdepths_item($id)
+    {
+        $id = clean_number($id);
+        $this->db->where('id', $id);
+        return $this->db->delete('ad_predefine_canvasdepths');
+    }
+
+    // -------------------------------------------
+
+
 	//get contact message
 	public function get_contact_message($id)
 	{

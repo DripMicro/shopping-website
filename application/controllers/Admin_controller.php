@@ -138,6 +138,7 @@ class Admin_controller extends Admin_Core_Controller
         $data['pre_orientations'] = $this->predefine_model->get_orientations();
         $data['pre_printsizes'] = $this->predefine_model->get_printsizes();
         $data['pre_finishoptions'] = $this->predefine_model->get_finishoptions();
+        $data['pre_canvasdepths'] = $this->predefine_model->get_canvasdepths();
         $this->load->view('admin/includes/_header', $data);
         $this->load->view('admin/predefine/predefine', $data);
         $this->load->view('admin/includes/_footer');
@@ -512,6 +513,70 @@ class Admin_controller extends Admin_Core_Controller
     {
         $id = $this->input->post('id', true);
         if ($this->predefine_model->delete_finishoptions_item($id)) {
+            $this->session->set_flashdata('success', trans("msg_item_deleted"));
+        } else {
+            $this->session->set_flashdata('error', trans("msg_error"));
+        }
+    }
+
+    //  --------------------------------------
+
+
+    // -----------------------------------------------------------------------------------------
+
+/*
+    * Predefine Setting add canvasdepths Post
+    */
+    public function predefine_setting_add_canvasdepths_post()
+    {
+        $canvasdepths = $this->input->post('add_canvasdepths', true);
+        $price = $this->input->post('add_price', true);
+        $this->predefine_model->add_canvasdepths_post($canvasdepths, $price);
+        $this->session->set_flashdata('success', trans("msg_updated"));
+        $this->session->set_flashdata('msg_settings', 1);
+        redirect($this->agent->referrer());
+    }
+
+    /**
+     * Update Predefine canvasdepths
+     */
+    public function update_pre_canvasdepths($id)
+    {
+        $data['title'] = trans("pre_finish_options");
+        //get item
+        $data['item'] = $this->predefine_model->get_canvasdepths_item($id);
+
+        if (empty($data['item'])) {
+            redirect($this->agent->referrer());
+        }
+        $this->load->view('admin/includes/_header', $data);
+        $this->load->view('admin/predefine/update_canvasdepths', $data);
+        $this->load->view('admin/includes/_footer');
+    }
+
+    /**
+     * Update canvasdepths Item Post
+     */
+    public function update_canvasdepths_item_post()
+    {
+        //item id
+        $id = $this->input->post('id', true);
+        if ($this->predefine_model->update_canvasdepths_item($id)) {
+            $this->session->set_flashdata('success', trans("msg_updated"));
+            redirect(admin_url() . 'predefine-settings');
+        } else {
+            $this->session->set_flashdata('error', trans("msg_error"));
+            redirect($this->agent->referrer());
+        }
+    }
+
+    /**
+     * Delete canvasdepths Item Post
+     */
+    public function delete_canvasdepths_item_post()
+    {
+        $id = $this->input->post('id', true);
+        if ($this->predefine_model->delete_canvasdepths_item($id)) {
             $this->session->set_flashdata('success', trans("msg_item_deleted"));
         } else {
             $this->session->set_flashdata('error', trans("msg_error"));
