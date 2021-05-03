@@ -228,6 +228,62 @@ class Predefine_model extends CI_Model
 
     // -------------------------------------------
 
+
+     //  ---------------------------------------------------
+
+    //add printsizes name
+    public function add_printsizes_post($material_id, $orientation_id, $printsizes, $price)
+    {
+        $data = array(
+            'materials' => $material_id,
+            'orientations' => $orientation_id,
+            'size' => $printsizes,
+            'price' => $price,
+        );
+        $this->db->insert('ad_predefine_printsizes', $data);
+    }
+    //get predefine printsizes
+	public function get_printsizes()
+	{
+		$query = $this->db->get('ad_predefine_printsizes');
+		return $query->result();
+	}
+
+    //get printsizes item
+    public function get_printsizes_item($id)
+    {
+        $id = clean_number($id);
+        $this->db->where('id', $id);
+        $query = $this->db->get('ad_predefine_printsizes');
+        return $query->row();
+    }
+
+    //update printsizes item
+    public function update_printsizes_item($id)
+    {
+        $data = array(
+            'materials' => $this->input->post('material', true),
+            'orientations' => $this->input->post('orientation', true),
+            'size' => $this->input->post('add_printsize', true),
+            'price' => $this->input->post('add_price', true),
+        );
+
+        $this->db->where('id', $id);
+        return $this->db->update('ad_predefine_printsizes', $data);
+    }
+
+    //delete printsizes item
+    public function delete_printsizes_item($id)
+    {
+        $id = clean_number($id);
+        $this->db->where('id', $id);
+        return $this->db->delete('ad_predefine_printsizes');
+    }
+
+    // -------------------------------------------
+
+
+
 	//get contact message
 	public function get_contact_message($id)
 	{

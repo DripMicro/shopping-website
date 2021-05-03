@@ -115,6 +115,7 @@ class Admin_controller extends Admin_Core_Controller
         $data['pre_categories'] = $this->predefine_model->get_categories();
         $data['pre_materials'] = $this->predefine_model->get_materials();
         $data['pre_orientations'] = $this->predefine_model->get_orientations();
+        $data['pre_printsizes'] = $this->predefine_model->get_printsizes();
         $this->load->view('admin/includes/_header', $data);
         $this->load->view('admin/predefine/predefine', $data);
         $this->load->view('admin/includes/_footer');
@@ -365,6 +366,76 @@ class Admin_controller extends Admin_Core_Controller
     }
 
     //  --------------------------------------
+
+
+     // -----------------------------------------------------------------------------------------
+
+/*
+    * Predefine Setting add printsizes Post
+    */
+    public function predefine_setting_add_printsizes_post()
+    {
+        $material_id = $this->input->post('material', true);
+        $orientation_id = $this->input->post('orientation', true);
+        $printsizes = $this->input->post('add_printsize', true);
+        $price = $this->input->post('add_price', true);
+        $this->predefine_model->add_printsizes_post($material_id, $orientation_id, $printsizes, $price);
+        $this->session->set_flashdata('success', trans("msg_updated"));
+        $this->session->set_flashdata('msg_settings', 1);
+        redirect($this->agent->referrer());
+    }
+
+    /**
+     * Update Predefine printsizes
+     */
+    public function update_pre_printsizes($id)
+    {
+        $data['title'] = trans("pre_print_size");
+        //get item
+        $data['item'] = $this->predefine_model->get_printsizes_item($id);
+        $data['materials'] = $this->predefine_model->get_materials();
+        $data['orientations'] = $this->predefine_model->get_orientations();
+
+        if (empty($data['item'])) {
+            redirect($this->agent->referrer());
+        }
+        $this->load->view('admin/includes/_header', $data);
+        $this->load->view('admin/predefine/update_printsizes', $data);
+        $this->load->view('admin/includes/_footer');
+    }
+
+    /**
+     * Update printsizes Item Post
+     */
+    public function update_printsizes_item_post()
+    {
+        //item id
+        $id = $this->input->post('id', true);
+        if ($this->predefine_model->update_printsizes_item($id)) {
+            $this->session->set_flashdata('success', trans("msg_updated"));
+            redirect(admin_url() . 'predefine-settings');
+        } else {
+            $this->session->set_flashdata('error', trans("msg_error"));
+            redirect($this->agent->referrer());
+        }
+    }
+
+    /**
+     * Delete printsizes Item Post
+     */
+    public function delete_printsizes_item_post()
+    {
+        $id = $this->input->post('id', true);
+        if ($this->predefine_model->delete_printsizes_item($id)) {
+            $this->session->set_flashdata('success', trans("msg_item_deleted"));
+        } else {
+            $this->session->set_flashdata('error', trans("msg_error"));
+        }
+    }
+
+    //  --------------------------------------
+
+
 
     /*
     * Homepage Manager Settings Post
