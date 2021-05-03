@@ -15,7 +15,7 @@
 
 				<div class="item-table-filter">
 					<label><?php echo trans("orientations"); ?></label>
-					<input name="add_orientations" class="form-control" type="text" value="<?php echo $item->orientations; ?>">
+					<input name="add_orientations" class="form-control" type="text" value="<?php echo $item->orientations; ?>" required>
 				</div>
 			</div>
 			<!-- /.box-body -->

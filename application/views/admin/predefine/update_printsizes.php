@@ -44,14 +44,14 @@
 				<div class="row">
 					<div class="col">
 						<label><?php echo trans("pre_print_size"); ?></label>
-						<input name="add_printsize" class="form-control" type="text" value="<?php echo $item->size; ?>">
+						<input name="add_printsize" class="form-control" type="text" value="<?php echo $item->size; ?>" required>
 					</div>
 				</div>
 
 				<div class="row">
 					<div class="col">
 						<label><?php echo trans("own_price")."($)"; ?></label>
-						<input name="add_price" class="form-control" type="number" value="<?php echo $item->price; ?>">
+						<input name="add_price" class="form-control" type="number" value="<?php echo $item->price; ?>" required>
 					</div>
 				</div>
 			</div>

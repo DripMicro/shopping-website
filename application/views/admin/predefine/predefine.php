@@ -33,6 +33,9 @@
                                 <li class="nav-item">
                                     <a class="nav-link" id="tab_pre_canvas_depth" data-toggle="tab" href="#tab_pre_canvas_depth_content" role="tab" aria-controls="tab_pre_canvas_depth" aria-selected="false"><?php echo trans("pre_canvas_depth"); ?></a>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="tab_pre_frame_style" data-toggle="tab" href="#tab_pre_frame_style_content" role="tab" aria-controls="tab_pre_frame_style" aria-selected="false"><?php echo trans("pre_frame_style"); ?></a>
+                                </li>
                             </ul>
 
                             <div id="accordion" class="tab-content">
@@ -531,6 +534,92 @@
                                                         </table>
 
                                                         <?php if (empty($pre_canvasdepths)): ?>
+                                                            <p class="text-center">
+                                                                <?php echo trans("no_records_found"); ?>
+                                                            </p>
+                                                        <?php endif; ?>
+                                                        <div class="col-sm-12 table-ft">
+                                                            <div class="row">
+                                                                <div class="pull-right">
+                                                                    <?php echo $this->pagination->create_links(); ?>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div><!-- /.box-body -->
+                                    </div>
+                                </div>
+
+
+                                <div class="tab-pane fade" id="tab_pre_frame_style_content" role="tabpanel">
+                                    <div class="card">
+                                        <div class="box-body">
+                                            <div class="row">
+                                                <!-- include message block -->
+                                                <div class="col-sm-12">
+                                                    <?php $this->load->view('admin/includes/_messages'); ?>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="table-responsive">
+                                                        <table class="table table-bordered table-striped" role="grid">
+                                                            <?php $this->load->view('admin/predefine/predefine_framestyles_post'); ?>
+                                                            <thead>
+                                                                <tr role="row">
+                                                                    <th><?php echo trans('id'); ?></th>
+                                                                    <th><?php echo trans('image'); ?></th>
+                                                                    <th><?php echo trans('materials'); ?></th>
+                                                                    <th><?php echo trans('pre_frame_style'); ?></th>
+                                                                    <th><?php echo trans('price')."($)"; ?></th>
+                                                                    <th><?php echo trans('date'); ?></th>
+                                                                    <th></th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            <?php foreach ($pre_framestyles as $item): ?>
+                                                                <tr>
+                                                                    <td>#<?php echo $item->id; ?></td>
+                                                                    <td>
+                                                                        <img src="<?= base_url() . $item->image; ?>" style="max-width: 160px; max-height: 160px;">
+                                                                    </td>
+                                                                    <td><?php 
+                                                                        foreach($pre_materials as $material){
+                                                                            if($material->id == $item->materials){
+                                                                                echo $material->materials;
+                                                                                break;
+                                                                            }
+                                                                        }
+                                                                    ?></td>
+                                                                    <td><?php echo $item->framestyles; ?></td>
+                                                                    <td><?php echo $item->price; ?></td>
+                                                                    <td><?php echo $item->date; ?></td>
+                                                                    <td style="width:100px;">
+                                                                        <div class="dropdown">
+                                                                            <button class="btn bg-purple dropdown-toggle btn-select-option"
+                                                                                    type="button"
+                                                                                    data-toggle="dropdown"><?php echo trans('select_option'); ?>
+                                                                                <span class="caret"></span>
+                                                                            </button>
+                                                                            <ul class="dropdown-menu options-dropdown">
+                                                                                <li>
+                                                                                    <a href="<?php echo admin_url(); ?>update-pre-framestyles/<?php echo html_escape($item->id); ?>"><i class="fa fa-edit option-icon"></i><?php echo trans('edit'); ?></a>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <a href="javascript:void(0)" onclick="delete_item('admin_controller/delete_framestyles_item_post','<?php echo $item->id; ?>','<?php echo trans("confirm_delete_item"); ?>');"><i class="fa fa-trash option-icon"></i><?php echo trans('delete'); ?></a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            <?php endforeach; ?>
+                                                            </tbody>
+                                                        </table>
+
+                                                        <?php if (empty($pre_framestyles)): ?>
                                                             <p class="text-center">
                                                                 <?php echo trans("no_records_found"); ?>
                                                             </p>

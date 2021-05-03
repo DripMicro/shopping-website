@@ -139,6 +139,7 @@ class Admin_controller extends Admin_Core_Controller
         $data['pre_printsizes'] = $this->predefine_model->get_printsizes();
         $data['pre_finishoptions'] = $this->predefine_model->get_finishoptions();
         $data['pre_canvasdepths'] = $this->predefine_model->get_canvasdepths();
+        $data['pre_framestyles'] = $this->predefine_model->get_framestyles();
         $this->load->view('admin/includes/_header', $data);
         $this->load->view('admin/predefine/predefine', $data);
         $this->load->view('admin/includes/_footer');
@@ -577,6 +578,72 @@ class Admin_controller extends Admin_Core_Controller
     {
         $id = $this->input->post('id', true);
         if ($this->predefine_model->delete_canvasdepths_item($id)) {
+            $this->session->set_flashdata('success', trans("msg_item_deleted"));
+        } else {
+            $this->session->set_flashdata('error', trans("msg_error"));
+        }
+    }
+
+    //  --------------------------------------
+
+
+    // -----------------------------------------------------------------------------------------
+
+/*
+    * Predefine Setting add framestyles Post
+    */
+    public function predefine_setting_add_framestyles_post()
+    {
+        $material_id = $this->input->post('material', true);
+        $framestyles = $this->input->post('add_framestyles', true);
+        $price = $this->input->post('add_price', true);
+        $this->predefine_model->add_framestyles_post($material_id, $framestyles, $price);
+        $this->session->set_flashdata('success', trans("msg_updated"));
+        $this->session->set_flashdata('msg_settings', 1);
+        redirect($this->agent->referrer());
+    }
+
+    /**
+     * Update Predefine framestyles
+     */
+    public function update_pre_framestyles($id)
+    {
+        $data['title'] = trans("pre_frame_style");
+        $data['materials'] = $this->predefine_model->get_materials();
+        //get item
+        $data['item'] = $this->predefine_model->get_framestyles_item($id);
+
+        if (empty($data['item'])) {
+            redirect($this->agent->referrer());
+        }
+        $this->load->view('admin/includes/_header', $data);
+        $this->load->view('admin/predefine/update_framestyles', $data);
+        $this->load->view('admin/includes/_footer');
+    }
+
+    /**
+     * Update framestyles Item Post
+     */
+    public function update_framestyles_item_post()
+    {
+        //item id
+        $id = $this->input->post('id', true);
+        if ($this->predefine_model->update_framestyles_item($id)) {
+            $this->session->set_flashdata('success', trans("msg_updated"));
+            redirect(admin_url() . 'predefine-settings');
+        } else {
+            $this->session->set_flashdata('error', trans("msg_error"));
+            redirect($this->agent->referrer());
+        }
+    }
+
+    /**
+     * Delete framestyles Item Post
+     */
+    public function delete_framestyles_item_post()
+    {
+        $id = $this->input->post('id', true);
+        if ($this->predefine_model->delete_framestyles_item($id)) {
             $this->session->set_flashdata('success', trans("msg_item_deleted"));
         } else {
             $this->session->set_flashdata('error', trans("msg_error"));

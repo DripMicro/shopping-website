@@ -16,6 +16,13 @@ class Predefine_model extends CI_Model
 		return $data;
 	}
 
+    //get index framestyles
+    public function get_index_framestyles($id)
+    {
+        $this->db->where('id', clean_number($id));
+        return $this->db->get('ad_predefine_framestyles')->row();
+    }
+
 	//add contact message
 	public function add_contact_message()
 	{
@@ -378,6 +385,77 @@ class Predefine_model extends CI_Model
         $id = clean_number($id);
         $this->db->where('id', $id);
         return $this->db->delete('ad_predefine_canvasdepths');
+    }
+
+    // -------------------------------------------
+
+
+     //  ---------------------------------------------------$material_id, $image, $framestyles, $price
+
+    //add framestyles name
+    public function add_framestyles_post($material_id, $framestyles, $price)
+    {
+        $data = array(
+            'materials' => $material_id,
+            'framestyles' => $framestyles,
+            'price' => $price,
+        );
+
+        $this->load->model('upload_model');
+        $file_path = $this->upload_model->ad_upload('file');
+        if (!empty($file_path)) {
+            $data["image"] = $file_path;
+        }
+
+        $this->db->insert('ad_predefine_framestyles', $data);
+    }
+    //get predefine framestyles
+	public function get_framestyles()
+	{
+		$query = $this->db->get('ad_predefine_framestyles');
+		return $query->result();
+	}
+
+    //get framestyles item
+    public function get_framestyles_item($id)
+    {
+        $id = clean_number($id);
+        $this->db->where('id', $id);
+        $query = $this->db->get('ad_predefine_framestyles');
+        return $query->row();
+    }
+
+    //update framestyles item
+    public function update_framestyles_item($id)
+    {
+        $frame = $this->get_index_framestyles($id);
+        if (!empty($frame)) {
+            $data = array(
+                'framestyles' => $this->input->post('add_framestyles', true),
+                'materials' => $this->input->post('material', true),
+                'price' => $this->input->post('add_price', true),
+            );
+            $this->load->model('upload_model');
+            $file_path = $this->upload_model->ad_upload('file');
+            if (!empty($file_path)) {
+                $data["image"] = $file_path;
+            }
+            $this->db->where('id', $frame->id);
+            return $this->db->update('ad_predefine_framestyles', $data);
+        }
+        return false;
+    }
+
+    //delete framestyles item
+    public function delete_framestyles_item($id)
+    {
+        $frame = $this->get_index_framestyles($id);
+        if (!empty($frame)) {
+            delete_file_from_server($frame->image);
+            $this->db->where('id', $frame->id);
+            return $this->db->delete('ad_predefine_framestyles');
+        }
+        return false;
     }
 
     // -------------------------------------------

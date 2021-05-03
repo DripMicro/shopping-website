@@ -16,14 +16,14 @@
 				<div class="row">
 					<div class="col">
 						<label><?php echo trans("materials"); ?></label>
-						<input name="add_materials" class="form-control" type="text" value="<?php echo $item->materials; ?>">
+						<input name="add_materials" class="form-control" type="text" value="<?php echo $item->materials; ?>" required>
 					</div>
 				</div>
 
 				<div class="row">
 					<div class="col">
 						<label><?php echo trans("own_price")."($)"; ?></label>
-						<input name="add_price" class="form-control" type="number"  value="<?php echo $item->price; ?>"">
+						<input name="add_price" class="form-control" type="number"  value="<?php echo $item->price; ?>" required>
 					</div>
 				</div>
 			</div>

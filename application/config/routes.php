@@ -204,6 +204,7 @@ $route[getr('admin', $rts) . '/update-pre-orientations/(:num)'] = 'admin_control
 $route[getr('admin', $rts) . '/update-pre-printsizes/(:num)'] = 'admin_controller/update_pre_printsizes/$1';
 $route[getr('admin', $rts) . '/update-pre-finishoptions/(:num)'] = 'admin_controller/update_pre_finishoptions/$1';
 $route[getr('admin', $rts) . '/update-pre-canvasdepths/(:num)'] = 'admin_controller/update_pre_canvasdepths/$1';
+$route[getr('admin', $rts) . '/update-pre-framestyles/(:num)'] = 'admin_controller/update_pre_framestyles/$1';
 
 /*page routes*/
 $route[getr('admin', $rts)] = 'admin_controller/index';

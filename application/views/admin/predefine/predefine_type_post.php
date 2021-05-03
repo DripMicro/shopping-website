@@ -4,7 +4,7 @@
 
         <div class="item-table-filter">
             <label><?php echo trans("type"); ?></label>
-            <input name="add_type" class="form-control" type="text">
+            <input name="add_type" class="form-control" type="text" required>
         </div>
 
         <div class="item-table-filter md-top-10" style="width: 65px; min-width: 65px;">

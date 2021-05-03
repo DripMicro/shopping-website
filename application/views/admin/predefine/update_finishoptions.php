@@ -16,14 +16,14 @@
 				<div class="row">
 					<div class="col">
 						<label><?php echo trans("pre_finish_options"); ?></label>
-						<input name="add_finishoptions" class="form-control" type="text" value="<?php echo $item->finishoptions; ?>">
+						<input name="add_finishoptions" class="form-control" type="text" value="<?php echo $item->finishoptions; ?>" required>
 					</div>
 				</div>
 
 				<div class="row">
 					<div class="col">
 						<label><?php echo trans("own_price")."($)"; ?></label>
-						<input name="add_price" class="form-control" type="number"  value="<?php echo $item->price; ?>"">
+						<input name="add_price" class="form-control" type="number"  value="<?php echo $item->price; ?>" required>
 					</div>
 				</div>
 			</div>

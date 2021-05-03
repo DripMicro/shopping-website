@@ -15,7 +15,7 @@
 
 				<div class="item-table-filter">
 					<label><?php echo trans("type"); ?></label>
-					<input name="add_type" class="form-control" type="text" value="<?php echo $item->type; ?>">
+					<input name="add_type" class="form-control" type="text" value="<?php echo $item->type; ?>" required>
 				</div>
 			</div>
 			<!-- /.box-body -->

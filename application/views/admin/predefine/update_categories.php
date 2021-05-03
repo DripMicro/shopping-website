@@ -15,7 +15,7 @@
 
 				<div class="item-table-filter">
 					<label><?php echo trans("categories"); ?></label>
-					<input name="add_categories" class="form-control" type="text" value="<?php echo $item->category; ?>">
+					<input name="add_categories" class="form-control" type="text" value="<?php echo $item->category; ?>" required>
 				</div>
 			</div>
 			<!-- /.box-body -->
