@@ -36,6 +36,9 @@
                                 <li class="nav-item">
                                     <a class="nav-link" id="tab_pre_frame_style" data-toggle="tab" href="#tab_pre_frame_style_content" role="tab" aria-controls="tab_pre_frame_style" aria-selected="false"><?php echo trans("pre_frame_style"); ?></a>
                                 </li>
+                                 <li class="nav-item">
+                                    <a class="nav-link" id="tab_pre_min_max_setting" data-toggle="tab" href="#tab_pre_min_max_setting_content" role="tab" aria-controls="tab_pre_min_max_setting" aria-selected="false"><?php echo trans("pre_min_max_setting"); ?></a>
+                                </li>
                             </ul>
 
                             <div id="accordion" class="tab-content">
@@ -633,6 +636,25 @@
                                                         </div>
 
                                                     </div>
+                                                </div>
+                                            </div>
+                                        </div><!-- /.box-body -->
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane fade" id="tab_pre_min_max_setting_content" role="tabpanel">
+                                    <div class="card">
+                                        <div class="box-body">
+                                            <div class="row">
+                                                <!-- include message block -->
+                                                <div class="col-sm-12">
+                                                    <?php $this->load->view('admin/includes/_messages'); ?>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <?php $this->load->view('admin/predefine/update_minmaxsettings'); ?>
                                                 </div>
                                             </div>
                                         </div><!-- /.box-body -->

@@ -125,23 +125,96 @@ class Admin_controller extends Admin_Core_Controller
 
 
     // -----------------------------------------------------------------------------------------
-        
-    /*
-    * Predefine Setting
-    */
-    public function predefine_setting()
+
+    public function pre_types()
     {
-        $data['title'] = trans("predefine_setting");
+        $data['title'] = trans("pre_type");
         $data['pre_types'] = $this->predefine_model->get_type();
+        $this->load->view('admin/includes/_header', $data);
+        $this->load->view('admin/predefine/type', $data);
+        $this->load->view('admin/includes/_footer');
+    }
+
+    public function pre_categories()
+    {
+        $data['title'] = trans("pre_categories");
         $data['pre_categories'] = $this->predefine_model->get_categories();
+        
+        $this->load->view('admin/includes/_header', $data);
+        $this->load->view('admin/predefine/categories', $data);
+        $this->load->view('admin/includes/_footer');
+    }
+
+    public function pre_materials()
+    {
+        $data['title'] = trans("pre_materials");
+        $data['pre_materials'] = $this->predefine_model->get_materials();
+        
+        $this->load->view('admin/includes/_header', $data);
+        $this->load->view('admin/predefine/materials', $data);
+        $this->load->view('admin/includes/_footer');
+    }
+
+    public function pre_orientations()
+    {
+        $data['title'] = trans("pre_orientations");
+        $data['pre_orientations'] = $this->predefine_model->get_orientations();
+        
+        $this->load->view('admin/includes/_header', $data);
+        $this->load->view('admin/predefine/orientations', $data);
+        $this->load->view('admin/includes/_footer');
+    }
+
+    public function pre_printsizes()
+    {
+        $data['title'] = trans("pre_print_size");
         $data['pre_materials'] = $this->predefine_model->get_materials();
         $data['pre_orientations'] = $this->predefine_model->get_orientations();
         $data['pre_printsizes'] = $this->predefine_model->get_printsizes();
-        $data['pre_finishoptions'] = $this->predefine_model->get_finishoptions();
-        $data['pre_canvasdepths'] = $this->predefine_model->get_canvasdepths();
-        $data['pre_framestyles'] = $this->predefine_model->get_framestyles();
+        
         $this->load->view('admin/includes/_header', $data);
-        $this->load->view('admin/predefine/predefine', $data);
+        $this->load->view('admin/predefine/printsizes', $data);
+        $this->load->view('admin/includes/_footer');
+    }
+
+    public function pre_finishoptions()
+    {
+        $data['title'] = trans("pre_finish_options");
+        $data['pre_finishoptions'] = $this->predefine_model->get_finishoptions();
+        
+        $this->load->view('admin/includes/_header', $data);
+        $this->load->view('admin/predefine/finishoptions', $data);
+        $this->load->view('admin/includes/_footer');
+    }
+
+    public function pre_canvasdepths()
+    {
+        $data['title'] = trans("pre_canvas_depth");
+        $data['pre_canvasdepths'] = $this->predefine_model->get_canvasdepths();
+        
+        $this->load->view('admin/includes/_header', $data);
+        $this->load->view('admin/predefine/canvasdepths', $data);
+        $this->load->view('admin/includes/_footer');
+    }
+
+    public function pre_framestyles()
+    {
+        $data['title'] = trans("pre_frame_style");
+        $data['pre_materials'] = $this->predefine_model->get_materials();
+        $data['pre_framestyles'] = $this->predefine_model->get_framestyles();
+        
+        $this->load->view('admin/includes/_header', $data);
+        $this->load->view('admin/predefine/framestyles', $data);
+        $this->load->view('admin/includes/_footer');
+    }
+
+    public function pre_minmaxsettings()
+    {
+        $data['title'] = trans("pre_min_max_setting");
+        $data['price_value'] = $this->predefine_model->get_minmaxprice();
+
+        $this->load->view('admin/includes/_header', $data);
+        $this->load->view('admin/predefine/minmaxsettings', $data);
         $this->load->view('admin/includes/_footer');
     }
 
@@ -183,7 +256,7 @@ class Admin_controller extends Admin_Core_Controller
         $id = $this->input->post('id', true);
         if ($this->predefine_model->update_type_item($id)) {
             $this->session->set_flashdata('success', trans("msg_updated"));
-            redirect(admin_url() . 'predefine-settings');
+            redirect(admin_url() . 'pre-types');
         } else {
             $this->session->set_flashdata('error', trans("msg_error"));
             redirect($this->agent->referrer());
@@ -243,7 +316,7 @@ class Admin_controller extends Admin_Core_Controller
         $id = $this->input->post('id', true);
         if ($this->predefine_model->update_categories_item($id)) {
             $this->session->set_flashdata('success', trans("msg_updated"));
-            redirect(admin_url() . 'predefine-settings');
+            redirect(admin_url() . 'pre-categories');
         } else {
             $this->session->set_flashdata('error', trans("msg_error"));
             redirect($this->agent->referrer());
@@ -306,7 +379,7 @@ class Admin_controller extends Admin_Core_Controller
         $id = $this->input->post('id', true);
         if ($this->predefine_model->update_materials_item($id)) {
             $this->session->set_flashdata('success', trans("msg_updated"));
-            redirect(admin_url() . 'predefine-settings');
+            redirect(admin_url() . 'pre-materials');
         } else {
             $this->session->set_flashdata('error', trans("msg_error"));
             redirect($this->agent->referrer());
@@ -369,7 +442,7 @@ class Admin_controller extends Admin_Core_Controller
         $id = $this->input->post('id', true);
         if ($this->predefine_model->update_orientations_item($id)) {
             $this->session->set_flashdata('success', trans("msg_updated"));
-            redirect(admin_url() . 'predefine-settings');
+            redirect(admin_url() . 'pre-orientations');
         } else {
             $this->session->set_flashdata('error', trans("msg_error"));
             redirect($this->agent->referrer());
@@ -437,7 +510,7 @@ class Admin_controller extends Admin_Core_Controller
         $id = $this->input->post('id', true);
         if ($this->predefine_model->update_printsizes_item($id)) {
             $this->session->set_flashdata('success', trans("msg_updated"));
-            redirect(admin_url() . 'predefine-settings');
+            redirect(admin_url() . 'pre-printsizes');
         } else {
             $this->session->set_flashdata('error', trans("msg_error"));
             redirect($this->agent->referrer());
@@ -500,7 +573,7 @@ class Admin_controller extends Admin_Core_Controller
         $id = $this->input->post('id', true);
         if ($this->predefine_model->update_finishoptions_item($id)) {
             $this->session->set_flashdata('success', trans("msg_updated"));
-            redirect(admin_url() . 'predefine-settings');
+            redirect(admin_url() . 'pre-finishoptions');
         } else {
             $this->session->set_flashdata('error', trans("msg_error"));
             redirect($this->agent->referrer());
@@ -564,7 +637,7 @@ class Admin_controller extends Admin_Core_Controller
         $id = $this->input->post('id', true);
         if ($this->predefine_model->update_canvasdepths_item($id)) {
             $this->session->set_flashdata('success', trans("msg_updated"));
-            redirect(admin_url() . 'predefine-settings');
+            redirect(admin_url() . 'pre-canvasdepths');
         } else {
             $this->session->set_flashdata('error', trans("msg_error"));
             redirect($this->agent->referrer());
@@ -630,7 +703,7 @@ class Admin_controller extends Admin_Core_Controller
         $id = $this->input->post('id', true);
         if ($this->predefine_model->update_framestyles_item($id)) {
             $this->session->set_flashdata('success', trans("msg_updated"));
-            redirect(admin_url() . 'predefine-settings');
+            redirect(admin_url() . 'pre-framestyles');
         } else {
             $this->session->set_flashdata('error', trans("msg_error"));
             redirect($this->agent->referrer());
@@ -651,6 +724,41 @@ class Admin_controller extends Admin_Core_Controller
     }
 
     //  --------------------------------------
+
+    /**
+     * Update Predefine minmaxsettings
+     */
+    public function update_pre_minmaxsettings($id)
+    {
+        $data['title'] = trans("pre_min_max_setting");
+        //get item
+        $data['price_value'] = $this->predefine_model->get_minmaxprice();
+
+        if (empty($data['price_value'])) {
+            redirect($this->agent->referrer());
+        }
+        $this->load->view('admin/includes/_header', $data);
+        $this->load->view('admin/predefine/update_minmaxsettings', $data);
+        $this->load->view('admin/includes/_footer');
+    }
+
+    /**
+     * Update minmaxsettings Item Post
+     */
+    public function update_minmaxsettings_item_post()
+    {
+        //item id
+        if ($this->predefine_model->update_minmaxsettings_item('1')) {
+            $this->session->set_flashdata('success', trans("msg_updated"));
+            redirect(admin_url() . 'pre-minmaxsettings');
+        } else {
+            $this->session->set_flashdata('error', trans("msg_error"));
+            redirect($this->agent->referrer());
+        }
+    }
+
+    //  --------------------------------------
+
 
     /*
     * Homepage Manager Settings Post

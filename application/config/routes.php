@@ -190,7 +190,6 @@ $route[getr('admin', $rts) . '/login'] = 'common_controller/admin_login';
 /*navigation routes*/
 $route[getr('admin', $rts) . '/navigation'] = 'admin_controller/navigation';
 $route[getr('admin', $rts) . '/homepage-manager'] = 'admin_controller/homepage_manager';
-$route[getr('admin', $rts) . '/predefine-settings'] = 'admin_controller/predefine_setting';
 $route[getr('admin', $rts) . '/edit-banner/(:num)'] = 'admin_controller/edit_index_banner/$1';
 /*slider routes*/
 $route[getr('admin', $rts) . '/slider'] = 'admin_controller/slider';
@@ -205,6 +204,17 @@ $route[getr('admin', $rts) . '/update-pre-printsizes/(:num)'] = 'admin_controlle
 $route[getr('admin', $rts) . '/update-pre-finishoptions/(:num)'] = 'admin_controller/update_pre_finishoptions/$1';
 $route[getr('admin', $rts) . '/update-pre-canvasdepths/(:num)'] = 'admin_controller/update_pre_canvasdepths/$1';
 $route[getr('admin', $rts) . '/update-pre-framestyles/(:num)'] = 'admin_controller/update_pre_framestyles/$1';
+$route[getr('admin', $rts) . '/update-pre-minmaxsettings/(:num)'] = 'admin_controller/update_pre_minmaxsettings/$1';
+
+$route[getr('admin', $rts) . '/pre-types'] = 'admin_controller/pre_types';
+$route[getr('admin', $rts) . '/pre-categories'] = 'admin_controller/pre_categories';
+$route[getr('admin', $rts) . '/pre-materials'] = 'admin_controller/pre_materials';
+$route[getr('admin', $rts) . '/pre-orientations'] = 'admin_controller/pre_orientations';
+$route[getr('admin', $rts) . '/pre-printsizes'] = 'admin_controller/pre_printsizes';
+$route[getr('admin', $rts) . '/pre-finishoptions'] = 'admin_controller/pre_finishoptions';
+$route[getr('admin', $rts) . '/pre-canvasdepths'] = 'admin_controller/pre_canvasdepths';
+$route[getr('admin', $rts) . '/pre-framestyles'] = 'admin_controller/pre_framestyles';
+$route[getr('admin', $rts) . '/pre-minmaxsettings'] = 'admin_controller/pre_minmaxsettings';
 
 /*page routes*/
 $route[getr('admin', $rts)] = 'admin_controller/index';

@@ -16,7 +16,7 @@
 				<div class="row">
 					<div class="col">
 						<div class="form-group">
-							<label class="control-label"><?php echo trans("banner"); ?></label><br>
+							<label class="control-label"><?php echo trans("pre_frame_style"); ?></label><br>
 							<img src="<?= base_url() . $item->image; ?>" style="max-width: 320px; max-height: 320px;"><br><br>
 							<div class="display-block">
 								<a class='btn btn-default btn-sm btn-file-upload'>

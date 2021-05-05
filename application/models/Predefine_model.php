@@ -460,6 +460,27 @@ class Predefine_model extends CI_Model
 
     // -------------------------------------------
 
+    //get minmaxprice item
+    public function get_minmaxprice()
+    {
+        $id = clean_number('1');
+        $this->db->where('id', $id);
+        $query = $this->db->get('ad_predefine_minmaxsettings');
+        return $query->row();
+    }
+
+    //update minmaxsettings item
+    public function update_minmaxsettings_item($id)
+    {
+        $data = array(
+            'min_value' => $this->input->post('add_min_price', true),
+            'max_value' => $this->input->post('add_max_price', true),
+        );
+
+        $this->db->where('id', $id);
+        return $this->db->update('ad_predefine_minmaxsettings', $data);
+    }
+    // -------------------------------------------
 
 	//get contact message
 	public function get_contact_message($id)

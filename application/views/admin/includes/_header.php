@@ -175,13 +175,26 @@
                         <span><?php echo trans("homepage_manager"); ?></span>
                     </a>
                 </li>
-                
-                <li class="nav-predefine">
-                    <a href="<?php echo admin_url(); ?>predefine-settings">
+
+                <li class="treeview<?php is_admin_nav_active(['pre-types', 'pre-categories', 'pre-materials', 'pre-orientations', 'pre-printsizes', 'pre-finishoptions', 'pre-canvasdepths', 'pre-framestyles', 'pre-minmaxsettings']); ?>">
+                    <a href="#">
                         <i class="fa fa-list-ul"></i>
                         <span><?php echo trans("predefine_setting"); ?></span>
+                        <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                     </a>
+                    <ul class="treeview-menu">
+                        <li class="nav-pre-types"><a href="<?php echo admin_url(); ?>pre-types"> <?php echo trans("pre_type"); ?></a></li>
+                        <li class="nav-pre-categories"><a href="<?php echo admin_url(); ?>pre-categories"> <?php echo trans("pre_categories"); ?></a></li>
+                        <li class="nav-pre-materials"><a href="<?php echo admin_url(); ?>pre-materials"> <?php echo trans("pre_materials"); ?></a></li>
+                        <li class="nav-pre-orientations"><a href="<?php echo admin_url(); ?>pre-orientations"> <?php echo trans("pre_orientations"); ?></a></li>
+                        <li class="nav-pre-printsizes"><a href="<?php echo admin_url(); ?>pre-printsizes"> <?php echo trans("pre_print_size"); ?></a></li>
+                        <li class="nav-pre-finishoptions"><a href="<?php echo admin_url(); ?>pre-finishoptions"> <?php echo trans("pre_finish_options"); ?></a></li>
+                        <li class="nav-pre-canvasdepths"><a href="<?php echo admin_url(); ?>pre-canvasdepths"> <?php echo trans("pre_canvas_depth"); ?></a></li>
+                        <li class="nav-pre-framestyles"><a href="<?php echo admin_url(); ?>pre-framestyles"> <?php echo trans("pre_frame_style"); ?></a></li>
+                        <li class="nav-pre-minmaxsettings"><a href="<?php echo admin_url(); ?>pre-minmaxsettings"> <?php echo trans("pre_min_max_setting"); ?></a></li>
+                    </ul>
                 </li>
+
                 <li class="header"><?php echo trans("orders"); ?></li>
                 <li class="treeview<?php is_admin_nav_active(['orders', 'transactions', 'order-bank-transfers', 'invoices', 'order-details']); ?>">
                     <a href="#">
