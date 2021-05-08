@@ -1770,6 +1770,65 @@ table.dataTable {
     width: 100% !important;
 }
 
+
+.decline-message .user-contact-modal {
+    display: flex;
+    margin-left: 15px;
+}
+
+.decline-message .left {
+    /* display: table-cell; */
+    vertical-align: top;
+    padding-right: 10px;
+}
+
+.decline-message .user-contact-modal .right {
+    /* display: table-cell; */
+    vertical-align: top;
+}
+
+.decline-message .user-contact-modal img {
+    width: 80px;
+    height: 80px;
+    border-radius: 4px;
+    float: left;
+}
+
+.decline-message .user-contact-modal .right strong {
+    float: left;
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+
+.decline-message .user-contact-modal .right p {
+    float: left;
+    display: block;
+    width: 100%;
+    color: #555;
+    margin-bottom: 5px;
+}
+
+.decline-message .user-contact-modal .right .info a {
+    color: #555 !important;
+}
+
+.decline-message .user-contact-modal .right .info i {
+    margin-right: 8px !important;
+}
+
+.decline-message .success-message, .decline-message .error-message {
+    text-align: center;
+}
+
+.mr-left-10{
+    margin-left:10px;
+}
+
+.tx-center{
+    text-align: center;
+}
 @media (max-width: 1280px) {
     .table-responsive {
         overflow-x: auto !important;

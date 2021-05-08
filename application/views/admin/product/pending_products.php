@@ -4,7 +4,6 @@
     <div class="box-header with-border">
         <h3 class="box-title"><?php echo $title; ?></h3>
     </div><!-- /.box-header -->
-
     <div class="box-body">
         <div class="row">
             <!-- include message block -->
@@ -101,6 +100,10 @@
                                                 <a href="javascript:void(0)" onclick="approve_product('<?php echo $item->id; ?>');"><i class="fa fa-check option-icon"></i><?php echo trans("approve"); ?></a>
                                             </li>
                                             <li>
+                                                <!-- <button class="btn btn-contact-seller" data-toggle="modal" data-target="#messageModal" onclick="onclicks('<?php echo $item->id;?>')"><i class="icon-envelope"></i> <?php echo trans("ask_question") ?></button> -->
+                                                <a href="<?php echo admin_url(); ?>pending-decline-products/<?php echo html_escape($item->user_id); ?>?product_title=<?php echo get_product_title($item); ?>" ><i class="fa fa-mail-forward option-icon"></i><?php echo trans("decline"); ?></a>
+                                            </li>
+                                            <li>
                                                 <a href="<?= generate_dash_url("edit_product"); ?>/<?= $item->id; ?>" target="_blank"><i class="fa fa-edit option-icon"></i><?php echo trans("edit"); ?></a>
                                             </li>
                                             <li>
@@ -137,7 +140,6 @@
                             <?php endif; ?>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>

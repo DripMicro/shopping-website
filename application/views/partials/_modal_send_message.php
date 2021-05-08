@@ -10,7 +10,7 @@
                     <input type="hidden" id="message_send_em" value="<?php echo $user->send_email_new_message; ?>">
 
                     <div class="modal-header">
-                        <h4 class="title"><?php echo trans("send_message"); ?></h4>
+                        <h4 class="title"><?php echo trans("send_message"); ?> </h4>
                         <button type="button" class="close" data-dismiss="modal"><i class="icon-close"></i></button>
                     </div>
                     <!-- Modal body -->

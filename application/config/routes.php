@@ -236,6 +236,8 @@ $route[getr('admin', $rts) . '/digital-sales'] = 'order_admin_controller/digital
 /*product routes*/
 $route[getr('admin', $rts) . '/products'] = 'product_controller/products';
 $route[getr('admin', $rts) . '/pending-products'] = 'product_controller/pending_products';
+$route[getr('admin', $rts) . '/pending-decline-products/(:num)'] = 'product_controller/pending_decline_products/$1';
+
 $route[getr('admin', $rts) . '/hidden-products'] = 'product_controller/hidden_products';
 $route[getr('admin', $rts) . '/expired-products'] = 'product_controller/expired_products';
 $route[getr('admin', $rts) . '/sold-products'] = 'product_controller/sold_products';

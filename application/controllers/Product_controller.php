@@ -37,12 +37,24 @@ class Product_controller extends Admin_Core_Controller
         $data['title'] = trans("pending_products");
         $data['form_action'] = admin_url() . "pending-products";
         $data['list_type'] = "pending_products";
+        // $data['user'] = $this->auth_model->get_user(5);
         //get paginated pending products
         $pagination = $this->paginate(admin_url() . 'pending-products', $this->product_admin_model->get_paginated_pending_products_count('pending_products'));
         $data['products'] = $this->product_admin_model->get_paginated_pending_products($pagination['per_page'], $pagination['offset'], 'pending_products');
         
         $this->load->view('admin/includes/_header', $data);
         $this->load->view('admin/product/pending_products', $data);
+        $this->load->view('admin/includes/_footer');
+    }
+
+    public function pending_decline_products($user_id)
+    {
+        $data['title'] = trans("pending_products");
+
+        $data['user'] = $this->auth_model->get_user($user_id);
+        $data['product_title'] = $_GET['product_title'];
+        $this->load->view('admin/includes/_header', $data);
+        $this->load->view('admin/product/decline_messages', $data);
         $this->load->view('admin/includes/_footer');
     }
 
