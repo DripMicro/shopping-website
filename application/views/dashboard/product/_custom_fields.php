@@ -37,6 +37,7 @@
                     <label><?= $custom_field_name; ?></label>
                     <select name="field_<?= $custom_field->id; ?>" class="form-control custom-select" <?= ($custom_field->is_required == 1) ? 'required' : ''; ?>>
                         <option value=""><?= trans('select_option'); ?></option>
+                        
                         <?php $field_options = $this->field_model->get_field_options($custom_field, $this->selected_lang->id);
                         $field_values = $this->field_model->get_product_custom_field_values($custom_field->id, $product->id, $this->selected_lang->id);
                         $selected_option_ids = get_array_column_values($field_values, 'selected_option_id');
@@ -55,7 +56,7 @@
                         $field_values = $this->field_model->get_product_custom_field_values($custom_field->id, $product->id, $this->selected_lang->id);
                         $selected_option_ids = get_array_column_values($field_values, 'selected_option_id');
                         if (!empty($field_options)):
-                            foreach ($field_options as $field_option): ?>
+                            foreach ($field_options as $field_option):?>
                                 <div class="col-sm-12 col-sm-3 col-custom-option">
                                     <div class="custom-control custom-radio custom-control-validate-input label_validate_field_<?= $custom_field->id; ?>">
                                         <input type="radio" class="custom-control-input" id="form_radio_<?= $field_option->id; ?>" name="field_<?= $custom_field->id; ?>"

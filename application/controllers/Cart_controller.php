@@ -28,6 +28,8 @@ class Cart_controller extends Home_Core_Controller
         $data['description'] = trans("shopping_cart") . " - " . $this->app_name;
         $data['keywords'] = trans("shopping_cart") . "," . $this->app_name;
 
+        $value = $this->input->post('calculated_price', true);
+
         $data['cart_items'] = $this->session_cart_items;
         $data['cart_total'] = $this->cart_model->get_sess_cart_total();
         $data['cart_has_physical_product'] = $this->cart_model->check_cart_has_physical_product();
@@ -43,8 +45,10 @@ class Cart_controller extends Home_Core_Controller
     public function add_to_cart()
     {
         $product_id = $this->input->post('product_id', true);
+        $calculated_price = $this->input->post('calculated_price', true);
         $is_ajax = $this->input->post('is_ajax', true);
         $product = $this->product_model->get_active_product($product_id);
+        $product->price = $calculated_price;
         if (!empty($product)) {
             if ($product->status != 1) {
                 $this->session->set_flashdata('product_details_error', trans("msg_error_cart_unapproved_products"));

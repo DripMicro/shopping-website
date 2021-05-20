@@ -110,6 +110,7 @@ class Product_model extends CI_Model
         $data = array(
             'sku' => $this->input->post('sku', true),
             'price' => $this->input->post('price', true),
+            'calculated_price' => $this->input->post('price', true),
             'currency' => $this->input->post('currency', true),
             'discount_rate' => $this->input->post('discount_rate', true),
             'vat_rate' => $this->input->post('vat_rate', true),
@@ -125,6 +126,7 @@ class Product_model extends CI_Model
         );
 
         $data["price"] = get_price($data["price"], 'database');
+        $data["calculated_price"] = get_price($data["calculated_price"], 'database');
         if (empty($data["price"])) {
             $data["price"] = 0;
         }
@@ -1180,4 +1182,25 @@ class Product_model extends CI_Model
         return false;
     }
 
+    //get option id by product_id
+    public function get_orientation_id($id)
+    {
+
+        $select = "SELECT selected_option_id FROM custom_fields_product WHERE product_id = '$id' AND product_filter_key = 'orientation'";
+        $res = $this->db->query($select)->row();
+
+        if(!empty($res)) return $res->selected_option_id;
+        else return "30";
+    }
+
+    //update materials item
+    public function update_calculated_price($id, $price)
+    {
+        $data = array(
+            'calculated_price' => $price,
+        );
+
+        $this->db->where('id', $id);
+        return $this->db->update('products', $data);
+    }
 }

@@ -28,7 +28,7 @@
                                                         <tr role="row">
                                                             <th><?php echo trans('id'); ?></th>
                                                             <th><?php echo trans('materials'); ?></th>
-                                                            <th><?php echo trans('price')."($)"; ?></th>
+                                                            <!-- <th><?php echo trans('price')."($)"; ?></th> -->
                                                             <th><?php echo trans('date'); ?></th>
                                                             <th></th>
                                                         </tr>
@@ -38,7 +38,7 @@
                                                         <tr>
                                                             <td>#<?php echo $item->id; ?></td>
                                                             <td><?php echo $item->materials; ?></td>
-                                                            <td><?php echo $item->price; ?></td>
+                                                            <!-- <td><?php echo $item->price; ?></td> -->
                                                             <td><?php echo $item->date; ?></td>
                                                             <td style="width:100px;">
                                                                 <div class="dropdown">

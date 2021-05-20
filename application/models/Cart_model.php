@@ -190,7 +190,7 @@ class Cart_model extends CI_Model
             }
 
             $stock = $product->stock;
-            $price = get_price($product->price, 'decimal');
+            $price = get_price($product->calculated_price, 'decimal');
             $discount_rate = $product->discount_rate;
             if (!empty($options_array)) {
                 foreach ($options_array as $option_id) {

@@ -170,7 +170,13 @@ class Admin_controller extends Admin_Core_Controller
         $data['title'] = trans("pre_print_size");
         $data['pre_materials'] = $this->predefine_model->get_materials();
         $data['pre_orientations'] = $this->predefine_model->get_orientations();
+
         $data['pre_printsizes'] = $this->predefine_model->get_printsizes();
+
+        $data['category_id'] = $this->predefine_model->get_first_category();
+        $data['product_id'] = $this->predefine_model->get_first_product();
+
+        $data["custom_fields"] = $this->field_model->get_custom_fields_by_category($data['category_id']);
         
         $this->load->view('admin/includes/_header', $data);
         $this->load->view('admin/predefine/printsizes', $data);
@@ -346,8 +352,8 @@ class Admin_controller extends Admin_Core_Controller
     public function predefine_setting_add_materials_post()
     {
         $materials = $this->input->post('add_materials', true);
-        $price = $this->input->post('add_price', true);
-        $this->predefine_model->add_materials_post($materials, $price);
+        // $price = $this->input->post('add_price', true);
+        $this->predefine_model->add_materials_post($materials);
         $this->session->set_flashdata('success', trans("msg_updated"));
         $this->session->set_flashdata('msg_settings', 1);
         redirect($this->agent->referrer());
@@ -493,6 +499,11 @@ class Admin_controller extends Admin_Core_Controller
         $data['materials'] = $this->predefine_model->get_materials();
         $data['orientations'] = $this->predefine_model->get_orientations();
 
+        $data['category_id'] = $this->predefine_model->get_first_category();
+        $data['product_id'] = $this->predefine_model->get_first_product();
+
+        $data["custom_fields"] = $this->field_model->get_custom_fields_by_category($data['category_id']);
+        
         if (empty($data['item'])) {
             redirect($this->agent->referrer());
         }

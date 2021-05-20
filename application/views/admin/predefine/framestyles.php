@@ -40,7 +40,7 @@
                                                         <tr>
                                                             <td>#<?php echo $item->id; ?></td>
                                                             <td>
-                                                                <img src="<?= base_url() . $item->image; ?>" style="max-width: 160px; max-height: 160px;">
+                                                                <img src="<?= base_url() . $item->image; ?>" style="max-width: 70px; max-height: 70px;">
                                                             </td>
                                                             <td><?php 
                                                                 foreach($pre_materials as $material){

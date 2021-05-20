@@ -121,11 +121,13 @@
 </div>
 <?php echo form_open(get_product_form_data($product)->add_to_cart_url, ['id' => 'form_add_cart']); ?>
 <input type="hidden" name="product_id" value="<?php echo $product->id; ?>">
+
 <div class="row">
     <div class="col-12">
         <div class="row-custom product-variations">
             <div class="row row-product-variation item-variation">
                 <?php if (!empty($full_width_product_variations)):
+                    // print_r($full_width_product_variations);
                     foreach ($full_width_product_variations as $variation):
                         $this->load->view('product/details/_product_variations', ['variation' => $variation]);
                     endforeach;
@@ -143,6 +145,112 @@
 <div class="row">
     <div class="col-12"><?php $this->load->view('product/details/_messages'); ?></div>
 </div>
+
+<div class="row" id="select_material">
+    <div class="col-12">
+        <div class="form-group">
+            <div class="row">
+                <div class="col-sm-3 col-xs-12">
+                    <label><?php echo trans('materials').":"; ?></label>
+                </div>
+                <?php if(!empty($materials)): 
+                    foreach($materials as $key => $material):?>
+                        <div class="col-sm-3 col-xs-12 col-option">
+                            <input type="radio" name="materials" value="<?php echo $material->id?>" id="materials_<?php echo $material->id?>" onchange="selected_material(material_type = '<?php echo $material->materials?>')" class="square-purple sz-20" <?php echo $key == 0?'checked':''; ?>>
+                            <label for="materials_<?php echo $material->id?>" class="option-label trans-y"><?php echo $material->materials?></label>
+                        </div>
+                    <?php  endforeach ?>
+                <?php  endif ?>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="form-group" id="printsize">
+            <div class="row">
+                <div class="col-sm-6 col-xs-12">
+                    <div class="row">
+                        <div class="col-sm-12 col-xs-12 col-option">
+                            <label><?php echo trans('select_size'); ?></label>
+                            <select name="select_size" class="form-control" onchange="calculat_price($(this).val(), $(this).find('option:selected').attr('data-value'), variation_type = 'printsize')">
+                            <?php if(!empty($printsizes)){
+                                foreach($printsizes as $printsize){
+                                    if($printsize->materials == $first_material && $printsize->orientations == $orientation){?>
+                                        <option value="<?php echo $printsize->id?>" data-value="<?php echo $printsize->price?>"><?php echo $printsize->size;?></option>
+                                <?php }}}?>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 col-xs-12">
+                    <div class="row">
+                        <div class="col-sm-12 col-xs-12 col-option">
+                            <label><?php echo trans('pre_canvas_depth'); ?></label>
+                            <select name="canvas_depth" class="form-control" onchange="calculat_price($(this).val(), $(this).find('option:selected').attr('data-value'), variation_type = 'canvasdepth')">
+                            <?php if(!empty($canvasdepths)){
+                                foreach($canvasdepths as $canvasdepth){ ?>
+                                    <option value="<?php echo $canvasdepth->id;?>" data-value="<?php echo $canvasdepth->price?>"><?php echo $canvasdepth->canvasdepths;?></option>
+                                <?php }}?>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="form-group">
+            <div class="row">
+                <div class="col-sm-4 col-xs-12">
+                    <label><?php echo trans('select_finish').":"; ?></label>
+                </div>
+                <?php if(!empty($finishoptions)){
+                    foreach($finishoptions as $key => $finishoption){ ?>
+                        <div class="col-sm-2 col-xs-12 col-option">
+                            <input type="radio" name="finish_option" value="<?php echo $finishoption->id;?>" data-value="<?php echo $finishoption->price?>" id="finish_option<?php echo $finishoption->id;?>" class="square-purple sz-20" <?php echo $key == 0?'checked':''; ?> onchange="calculat_price($(this).val(), $(this).attr('data-value'), variation_type = 'finishoption')" required>
+                            <label for="finish_option<?php echo $finishoption->id;?>" class="option-label trans-y"><?php echo $finishoption->finishoptions;?></label>
+                        </div>
+                <?php }}?>
+                
+                <div class="col-sm-2 col-xs-12 col-option">
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="form-group">
+            <div class="row">
+                <div class="col-sm-3 col-xs-12" style="padding-top:10px;">
+                    <label><?php echo trans('pre_frame_style').":"; ?></label>
+                </div>
+                <div class="col-9 col-product-variation product-variation-radio" id="select_framestyle">
+                    <?php if(!empty($framestyles)){
+                        $key = 0;
+                        foreach($framestyles as $framestyle){ 
+                            if($framestyle->materials == $first_material){ ?>
+                                <div class="custom-control custom-control-variation custom-control-validate-input">
+                                    <input type="radio" name="framestyle" value="<?php echo $framestyle->id;?>" id="checkbox_<?php echo $framestyle->id;?>" data-value="<?php echo $framestyle->price?>" class="custom-control-input" <?php echo $key == 0?'checked':''; ?> onchange="calculat_price($(this).val(), $(this).attr('data-value'), variation_type = 'framestyle')" required>
+                                    <label for="checkbox_<?php echo $framestyle->id;?>" data-input-name="variation_<?php echo $framestyle->id;?>" class="custom-control-label custom-control-label-image label-variation_<?php echo $framestyle->id;?>">
+                                        <img src="<?php echo $framestyle->image;?>" class="img-variation-option" data-toggle="tooltip" data-placement="top" title="<?php echo $framestyle->framestyles;?>" alt="<?php echo $framestyle->framestyles;?>">
+                                    </label>
+                                </div>
+                       <?php  $key++;}}}?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="row">
     <div class="col-12 product-add-to-cart-container">
         <?php if ($product->is_sold != 1 && $product->listing_type != 'ordinary_listing' && $product->product_type != 'digital'): ?>
@@ -186,3 +294,279 @@
 
 <!--Include social share-->
 <?php $this->load->view("product/details/_product_share"); ?>
+
+<script src="<?= base_url(); ?>assets/js/jquery-3.5.1.min.js"></script>
+<script>
+    let select_size_price = 0;
+    let canvas_depth_price = 0;
+    let finish_option_price = 0;
+    let frame_style_price = 0;
+    let add_price = 0;
+
+    let selected_type = "Canvas"
+    // let product_id = ""
+    // let product_price = 0
+    // let discount_rate = 0
+    let price_element = $(".lbl-price")
+
+    select_size_price = Number($("select[name='select_size']").find('option:selected').attr("data-value"))
+    canvas_depth_price = Number($("select[name='canvas_depth']").find('option:selected').attr("data-value"))
+    finish_option_price = Number($("input[name='finish_option']").attr('data-value'))
+    frame_style_price = Number($("input[name='framestyle']").attr('data-value'))
+
+    add_price = select_size_price + canvas_depth_price + finish_option_price + frame_style_price
+    
+    console.log(select_size_price, canvas_depth_price, finish_option_price, frame_style_price, add_price)
+
+    // product_price = Number(price_element.html().trim().replace('<span>$</span>', '').replaceAll(',', ''))
+    // price_element.html("$3,956.24")
+
+    
+
+    $(document).ready(function(){
+        // console.log("after_price:", product_price)
+
+        product_id = "<?php echo $product->id;?>"
+        product_price = "<?php echo $product->price;?>"
+        discount_rate = "<?php echo $product->discount_rate;?>"
+
+        ajax_func(product_id, product_price, discount_rate)
+        $("#select_material input[type='radio']").click(function(){
+            const material_id = $(this).attr('id').replace('materials_','').trim()
+            const orient_id = "<?php echo $orientation;?>"
+
+            let data = {
+                "orient_id": orient_id,
+                "material_id": material_id
+            };
+
+
+            data[csfr_token_name] = $.cookie(csfr_cookie_name);
+
+            $.ajax({
+                type: "POST",
+                url: "<?= base_url(); ?>home_controller/get_printsize_by_material",
+                data: data,
+                dataType: "JSON",
+                success: function (response) {
+                    console.log(response)
+                    const Canvas = "<?php echo get_id_by_material_name('Canvas');?>"
+                    const FineArt = "<?php echo get_id_by_material_name('Fine Art');?>"
+                    const Metal = "<?php echo get_id_by_material_name('Metal');?>"
+
+                    let codeString = ""
+                    let codeStringFrameStyle = ""
+
+                    product_id = "<?php echo $product->id;?>"
+                    product_price = "<?php echo $product->price;?>"
+                    discount_rate = "<?php echo $product->discount_rate;?>"
+
+                    ajax_func(product_id, product_price, discount_rate)
+
+                    if(material_id == Canvas){
+
+                        let canvasdepth = response.canvasdepth
+                        let printsize = response.printsize
+                        let framestyle = response.framestyle
+                        
+                        codeString += "<div class='row'>"
+                        codeString += "<div class='col-sm-6 col-xs-12'>"
+                        codeString += "<div class='row'>"
+                        codeString += "<div class='col-sm-12 col-xs-12 col-option'>"
+                        codeString += "<label><?php echo trans('select_size'); ?></label>"
+                        codeString += "<select name='select_size' class='form-control'>"
+                        for(let r in printsize){
+                            codeString += "<option value='"+printsize[r].id+"' data-value='"+printsize[r].price+"'>"+printsize[r].size+"</option>"
+                        }
+                        codeString += "</select>"
+                        codeString += "</div>"
+                        codeString += "</div>"
+                        codeString += "</div>"
+
+                        codeString += "<div class='col-sm-6 col-xs-12'>"
+                        codeString += "<div class='row'>"
+                        codeString += "<div class='col-sm-12 col-xs-12 col-option'>"
+                        codeString += "<label><?php echo trans('pre_canvas_depth'); ?></label>"
+                        codeString += "<select name='canvas_depth' class='form-control'>"
+                        for(let r in canvasdepth){
+                            codeString += "<option value='"+canvasdepth[r].id+"' data-value='"+canvasdepth[r].price+"'>"+canvasdepth[r].canvasdepths+"</option>"
+                        }
+                        codeString += "</select>"
+                        codeString += "</div>"
+                        codeString += "</div>"
+                        codeString += "</div>"
+                        codeString += "</div>"
+
+                        let key = 0
+                        for(let f in framestyle){
+                            codeStringFrameStyle += "<div class='custom-control custom-control-variation custom-control-validate-input'>"
+                            if(key == 0){
+                                codeStringFrameStyle += "<input type='radio' name='framestyle' value='"+framestyle[f].id+"' id='checkbox_"+framestyle[f].id+"' data-value='"+framestyle[f].price+"' class='custom-control-input' checked required>"
+                            }else{
+                                codeStringFrameStyle += "<input type='radio' name='framestyle' value='"+framestyle[f].id+"' id='checkbox_"+framestyle[f].id+"' data-value='"+framestyle[f].price+"' class='custom-control-input' required>"
+                            }
+                            codeStringFrameStyle += "<label for='checkbox_"+framestyle[f].id+"' data-input-name='variation_"+framestyle[f].id+"' class='custom-control-label custom-control-label-image label-variation_"+framestyle[f].id+"'>"
+                            codeStringFrameStyle += "<img src='"+framestyle[f].image+"' class='img-variation-option' data-toggle='tooltip' data-placement='top' title='"+framestyle[f].framestyles+"' alt='"+framestyle[f].framestyles+"'>"
+                            codeStringFrameStyle += "</label>"
+                            codeStringFrameStyle += "</div>"
+                            key++
+                        }
+                    }else if(material_id == Metal){
+                        let printsize = response.printsize
+                        let framestyle = response.framestyle
+
+                        codeString += "<div class='row'>"
+                        codeString += "<div class='col-sm-12 col-xs-12'>"
+                        codeString += "<label><?php echo trans('select_size'); ?></label>"
+                        codeString += "</div>"
+
+                        let first_size = 0;
+                        for(let r in printsize){
+                            codeString += "<div class='col-sm-4 col-xs-12 col-option'>"
+                            if(first_size == 0) codeString += "<input type='radio' name='select_size_metal' value='"+printsize[r].id+"' id='select_size_"+printsize[r].id+"' data-value='"+printsize[r].price+"' class='square-purple sz-20' checked required>"
+                            else codeString += "<input type='radio' name='select_size_metal' value='"+printsize[r].id+"' id='select_size_"+printsize[r].id+"' data-value='"+printsize[r].price+"' class='square-purple sz-20' required>"
+                            codeString += "<label for='select_size_"+printsize[r].id+"' class='option-label trans-y'>&nbsp;"+printsize[r].size+"</label>"
+                            codeString += "</div>"
+                            first_size++
+                        }
+                        codeString += "</div>"
+
+                        let key = 0
+                        for(let f in framestyle){
+                            codeStringFrameStyle += "<div class='custom-control custom-control-variation custom-control-validate-input'>"
+                            if(key == 0){
+                                codeStringFrameStyle += "<input type='radio' name='framestyle' value='"+framestyle[f].id+"' id='checkbox_"+framestyle[f].id+"' data-value='"+framestyle[f].price+"' class='custom-control-input' checked required>"
+                            }else{
+                                codeStringFrameStyle += "<input type='radio' name='framestyle' value='"+framestyle[f].id+"' id='checkbox_"+framestyle[f].id+"' data-value='"+framestyle[f].price+"' class='custom-control-input' required>"
+                            }
+                            codeStringFrameStyle += "<label for='checkbox_"+framestyle[f].id+"' data-input-name='variation_"+framestyle[f].id+"' class='custom-control-label custom-control-label-image label-variation_"+framestyle[f].id+"'>"
+                            codeStringFrameStyle += "<img src='"+framestyle[f].image+"' class='img-variation-option' data-toggle='tooltip' data-placement='top' title='"+framestyle[f].framestyles+"' alt='"+framestyle[f].framestyles+"'>"
+                            codeStringFrameStyle += "</label>"
+                            codeStringFrameStyle += "</div>"
+                            key++
+                        }
+
+                    }else if (material_id == FineArt){
+                        let printsize = response.printsize
+                        let framestyle = response.framestyle
+
+                        codeString += "<div class='row'>"
+                        codeString += "<div class='col-sm-12 col-xs-12'>"
+                        codeString += "<div class='row'>"
+                        codeString += "<div class='col-sm-12 col-xs-12 col-option'>"
+                        codeString += "<label><?php echo trans('select_size'); ?></label>"
+                        codeString += "<select name='select_size' class='form-control'>"
+                        for(let r in printsize){
+                            codeString += "<option value='"+printsize[r].id+"' data-value='"+printsize[r].price+"'>"+printsize[r].size+"</option>"
+                        }
+                        codeString += "</select>"
+                        codeString += "</div>"
+                        codeString += "</div>"
+                        codeString += "</div>"
+                        codeString += "</div>"
+
+                        let key = 0
+                        for(let f in framestyle){
+                            codeStringFrameStyle += "<div class='custom-control custom-control-variation custom-control-validate-input'>"
+                            if(key == 0){
+                                codeStringFrameStyle += "<input type='radio' name='framestyle' value='"+framestyle[f].id+"' id='checkbox_"+framestyle[f].id+"' data-value='"+framestyle[f].price+"' class='custom-control-input' checked required>"
+                            }else{
+                                codeStringFrameStyle += "<input type='radio' name='framestyle' value='"+framestyle[f].id+"' id='checkbox_"+framestyle[f].id+"' data-value='"+framestyle[f].price+"' class='custom-control-input' required>"
+                            }
+                            codeStringFrameStyle += "<label for='checkbox_"+framestyle[f].id+"' data-input-name='variation_"+framestyle[f].id+"' class='custom-control-label custom-control-label-image label-variation_"+framestyle[f].id+"'>"
+                            codeStringFrameStyle += "<img src='"+framestyle[f].image+"' class='img-variation-option' data-toggle='tooltip' data-placement='top' title='"+framestyle[f].framestyles+"' alt='"+framestyle[f].framestyles+"'>"
+                            codeStringFrameStyle += "</label>"
+                            codeStringFrameStyle += "</div>"
+                            key++
+                        }
+                    }
+
+                    $("#printsize").html(codeString)
+                    $("#select_framestyle").html(codeStringFrameStyle)
+
+                    $('[data-toggle="tooltip"]').tooltip();
+
+                    $("select[name='select_size']").change(function(){
+                        calculat_price($(this).val(), $(this).find('option:selected').attr('data-value'), variation_type = 'printsize')
+                    })
+                    $("select[name='canvas_depth']").change(function(){
+                        calculat_price($(this).val(), $(this).find('option:selected').attr('data-value'), variation_type = 'canvasdepth')
+                    })
+                    $("input[name='framestyle']").change(function(){
+                        calculat_price($(this).val(), $(this).attr('data-value'), variation_type = 'framestyle')
+                    })
+                    $("input[name='select_size_metal']").change(function(){
+                        calculat_price($(this).val(), $(this).attr('data-value'), variation_type = 'printsize')
+                    })
+
+                    
+                    if(selected_type == "Metal"){
+                        select_size_price = Number($("input[name='select_size_metal']").attr('data-value'))
+                    }else{
+                        select_size_price = Number($("select[name='select_size']").find('option:selected').attr("data-value"))
+                    }
+                    if(selected_type == "Canvas"){
+                        canvas_depth_price = Number($("select[name='canvas_depth']").find('option:selected').attr("data-value"))
+                    }else{
+                        canvas_depth_price = 0
+                    } 
+                    finish_option_price = Number($("input[name='finish_option']").attr('data-value'))
+                    frame_style_price = Number($("input[name='framestyle']").attr('data-value'))
+
+                }
+            });
+
+            
+        })
+    })
+
+    function calculat_price(val, price, type){
+
+        product_id = "<?php echo $product->id;?>"
+        product_price = "<?php echo $product->price;?>"
+        discount_rate = "<?php echo $product->discount_rate;?>"
+        console.log("before_price:", product_price, discount_rate, product_id)
+
+        if(type == 'printsize'){
+            select_size_price = Number(price)
+        }else if(type == 'canvasdepth'){
+            canvas_depth_price = Number(price)
+        }else if(type == 'finishoption'){
+            finish_option_price = Number(price)
+        }else if(type == 'framestyle'){
+            frame_style_price = Number(price)
+        }
+
+        add_price = select_size_price + canvas_depth_price + finish_option_price + frame_style_price
+        let calculated_product_price = (((Number(product_price)/100)+add_price)*100)
+        // console.log((Number(product_price)/100+add_price)*100)
+        console.log("sz:", select_size_price,"cd:", canvas_depth_price,"fo:", finish_option_price,"fs:", frame_style_price,"ap:", add_price, product_price, calculated_product_price)
+
+        ajax_func(product_id, calculated_product_price, discount_rate)
+    }
+
+    function ajax_func(product_id, product_price, discount_rate){
+        let price_data = {
+            "product_id": product_id,
+            "price": product_price,
+            "discount_rate": discount_rate
+        };
+
+        price_data[csfr_token_name] = $.cookie(csfr_cookie_name);
+        $.ajax({
+            type: "POST",
+            url: "<?= base_url(); ?>home_controller/get_formated_price",
+            data: price_data,
+            dataType: "JSON",
+            success: function (response) {
+                $("#product_details_price_container").html(response)
+                
+            }
+        })
+    }
+
+    function selected_material(type){
+        selected_type = type
+        $("input[name='finish_option']:first").prop("checked", true)
+    }
+</script>

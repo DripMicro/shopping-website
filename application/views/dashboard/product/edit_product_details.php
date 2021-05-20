@@ -155,7 +155,7 @@
                     </div>
                 </div>
 
-                <?php $this->load->view("dashboard/product/_edit_price"); ?>
+                <?php $this->load->view("dashboard/product/_edit_price", ['range_price' => $range_price]); ?>
 
                 <?php if (($product->product_type == 'physical' && $this->product_settings->physical_demo_url == 1) || ($product->product_type == 'digital' && $this->product_settings->digital_demo_url == 1)): ?>
                     <div class="form-box">

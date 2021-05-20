@@ -176,6 +176,7 @@
                     </a>
                 </li>
 
+                <li class="header"><?php echo trans("predefine"); ?></li>
                 <li class="treeview<?php is_admin_nav_active(['pre-types', 'pre-categories', 'pre-materials', 'pre-orientations', 'pre-printsizes', 'pre-finishoptions', 'pre-canvasdepths', 'pre-framestyles', 'pre-minmaxsettings']); ?>">
                     <a href="#">
                         <i class="fa fa-list-ul"></i>
@@ -183,15 +184,27 @@
                         <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                     </a>
                     <ul class="treeview-menu">
-                        <li class="nav-pre-types"><a href="<?php echo admin_url(); ?>pre-types"> <?php echo trans("pre_type"); ?></a></li>
-                        <li class="nav-pre-categories"><a href="<?php echo admin_url(); ?>pre-categories"> <?php echo trans("pre_categories"); ?></a></li>
+                        <!-- <li class="nav-pre-types"><a href="<?php echo admin_url(); ?>pre-types"> <?php echo trans("pre_type"); ?></a></li> -->
+                        <!-- <li class="nav-pre-categories"><a href="<?php echo admin_url(); ?>pre-categories"> <?php echo trans("pre_categories"); ?></a></li> -->
                         <li class="nav-pre-materials"><a href="<?php echo admin_url(); ?>pre-materials"> <?php echo trans("pre_materials"); ?></a></li>
-                        <li class="nav-pre-orientations"><a href="<?php echo admin_url(); ?>pre-orientations"> <?php echo trans("pre_orientations"); ?></a></li>
+                        <!-- <li class="nav-pre-orientations"><a href="<?php echo admin_url(); ?>pre-orientations"> <?php echo trans("pre_orientations"); ?></a></li> -->
                         <li class="nav-pre-printsizes"><a href="<?php echo admin_url(); ?>pre-printsizes"> <?php echo trans("pre_print_size"); ?></a></li>
                         <li class="nav-pre-finishoptions"><a href="<?php echo admin_url(); ?>pre-finishoptions"> <?php echo trans("pre_finish_options"); ?></a></li>
                         <li class="nav-pre-canvasdepths"><a href="<?php echo admin_url(); ?>pre-canvasdepths"> <?php echo trans("pre_canvas_depth"); ?></a></li>
                         <li class="nav-pre-framestyles"><a href="<?php echo admin_url(); ?>pre-framestyles"> <?php echo trans("pre_frame_style"); ?></a></li>
                         <li class="nav-pre-minmaxsettings"><a href="<?php echo admin_url(); ?>pre-minmaxsettings"> <?php echo trans("pre_min_max_setting"); ?></a></li>
+                    </ul>
+                </li>
+
+                <li class="treeview<?php is_admin_nav_active(['add-custom-field', 'custom-fields', 'update-custom-field', 'custom-field-options']); ?>">
+                    <a href="#">
+                        <i class="fa fa-plus-square-o"></i>
+                        <span><?php echo trans("custom_fields"); ?></span>
+                        <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li class="nav-add-custom-field"><a href="<?php echo admin_url(); ?>add-custom-field"> <?php echo trans("add_custom_field"); ?></a></li>
+                        <li class="nav-custom-fields"><a href="<?php echo admin_url(); ?>custom-fields"> <?php echo trans("custom_fields"); ?></a></li>
                     </ul>
                 </li>
 
@@ -290,18 +303,6 @@
                         <?php if (is_admin()): ?>
                             <li class="nav-bulk-category-upload"><a href="<?php echo admin_url(); ?>bulk-category-upload"> <?php echo trans("bulk_category_upload"); ?></a></li>
                         <?php endif; ?>
-                    </ul>
-                </li>
-
-                <li class="treeview<?php is_admin_nav_active(['add-custom-field', 'custom-fields', 'update-custom-field', 'custom-field-options']); ?>">
-                    <a href="#">
-                        <i class="fa fa-plus-square-o"></i>
-                        <span><?php echo trans("custom_fields"); ?></span>
-                        <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li class="nav-add-custom-field"><a href="<?php echo admin_url(); ?>add-custom-field"> <?php echo trans("add_custom_field"); ?></a></li>
-                        <li class="nav-custom-fields"><a href="<?php echo admin_url(); ?>custom-fields"> <?php echo trans("custom_fields"); ?></a></li>
                     </ul>
                 </li>
 

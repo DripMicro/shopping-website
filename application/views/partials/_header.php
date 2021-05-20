@@ -64,6 +64,11 @@ foreach ($this->languages as $language): ?>
     <link rel="stylesheet" href="<?= base_url(); ?>assets/vendor/bootstrap/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="<?= base_url(); ?>assets/css/style-1.8.min.css"/>
     <link rel="stylesheet" href="<?= base_url(); ?>assets/css/plugins-1.8.css"/>
+
+    <!-- iCheck -->
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/admin/vendor/icheck/square/purple.css">
+    <link rel="stylesheet" href="<?= base_url(); ?>assets/admin/vendor/icheck/square/blue.css">
+    
 <?php $this->load->view("partials/_css_js_header"); ?>
 <?php if ($this->rtl == true): ?>
     <link rel="stylesheet" href="<?= base_url(); ?>assets/css/rtl-1.8.min.css">
@@ -76,6 +81,12 @@ foreach ($this->languages as $language): ?>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     <?= $this->general_settings->google_adsense_code; ?>
+
+    <script>
+        var base_url = "<?= base_url(); ?>";
+        var csfr_token_name = "<?= $this->security->get_csrf_token_name(); ?>";
+        var csfr_cookie_name = "<?= $this->config->item('csrf_cookie_name'); ?>";
+    </script>
 </head>
 <body>
 <header id="header">

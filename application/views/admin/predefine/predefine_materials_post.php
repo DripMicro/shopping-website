@@ -7,10 +7,10 @@
             <input name="add_materials" class="form-control" type="text" required>
         </div>
 
-        <div class="item-table-filter">
+        <!-- <div class="item-table-filter">
             <label><?php echo trans("own_price")."($)"; ?></label>
             <input name="add_price" class="form-control" type="number" required>
-        </div>
+        </div> -->
 
         <div class="item-table-filter md-top-10" style="width: 65px; min-width: 65px;">
             <label style="display: block">&nbsp;</label>

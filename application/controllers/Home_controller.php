@@ -338,6 +338,15 @@ class Home_controller extends Home_Core_Controller
             $data['og_published_time'] = $data['product']->created_at;
             $data['og_modified_time'] = $data['product']->created_at;
 
+            // variations for product
+            $data['materials'] = $this->predefine_model->get_materials();
+            $data['orientation'] = $this->product_model->get_orientation_id($data['product']->id);
+            $data['canvasdepths'] = $this->predefine_model->get_canvasdepths();
+            $data['finishoptions'] = $this->predefine_model->get_finishoptions();
+            $data['framestyles'] = $this->predefine_model->get_framestyles();
+            $data['printsizes'] = $this->predefine_model->get_printsizes();
+            $data['first_material'] = $this->predefine_model->get_first_material();
+
             $this->load->view('partials/_header', $data);
             $this->load->view('product/details/product', $data);
             $this->load->view('partials/_footer');
@@ -345,6 +354,49 @@ class Home_controller extends Home_Core_Controller
             $this->product_model->increase_product_pageviews($data["product"]);
         }
     }
+
+    /**
+     * Load the variation by orientation and material option
+     */
+
+     public function get_printsize_by_material(){
+        $material_id = clean_number($this->input->post('material_id', true));
+        $orient_id = clean_number($this->input->post('orient_id', true));
+
+        $canvasdepths = $this->predefine_model->get_canvasdepths();
+        
+        $n_material_id = get_id_by_material_name('Canvas');
+        $framestyles = $this->predefine_model->get_framestyles_item_by_material_id($material_id);
+
+        if($material_id != $n_material_id){
+            $res['printsize'] = $this->predefine_model->get_printsizes_by_material($material_id, $orient_id);
+            $res['framestyle'] = $framestyles;
+        }else{
+            $res['printsize'] = $this->predefine_model->get_printsizes_by_material($material_id, $orient_id);
+            $res['framestyle'] = $framestyles;
+            $res['canvasdepth'] = $canvasdepths;
+        }
+        
+        echo json_encode($res);
+     }
+
+     public function get_formated_price(){
+        $product_id = clean_number($this->input->post('product_id', true));
+        $price = $this->input->post('price', true);
+        $discount_rate = $this->input->post('discount_rate', true);
+
+        $product = $this->product_model->get_product_by_id($product_id);
+
+        $this->product_model->update_calculated_price($product_id, $price);
+
+        $vars = array(
+            "product" => $product,
+            "price" => $price,
+            "discount_rate" => $discount_rate
+        );
+        $res = $this->load->view('product/details/_price', $vars, true);
+        echo json_encode($res);
+     }
 
     /**
      * Load More Promoted Products

@@ -142,11 +142,11 @@ class Predefine_model extends CI_Model
     //  ---------------------------------------------------
 
     //add materials name
-    public function add_materials_post($materials, $price)
+    public function add_materials_post($materials)
     {
         $data = array(
             'materials' => $materials,
-            'price' => $price,
+            // 'price' => $price,
         );
         $this->db->insert('ad_predefine_materials', $data);
     }
@@ -166,12 +166,18 @@ class Predefine_model extends CI_Model
         return $query->row();
     }
 
+    public function get_id_by_material_name($material_name)
+    {
+        $this->db->where('materials', $material_name);
+        $query = $this->db->get('ad_predefine_materials');
+        return $query->row()->id;
+    }
     //update materials item
     public function update_materials_item($id)
     {
         $data = array(
             'materials' => $this->input->post('add_materials', true),
-            'price' => $this->input->post('add_price', true),
+            // 'price' => $this->input->post('add_price', true),
         );
 
         $this->db->where('id', $id);
@@ -201,8 +207,21 @@ class Predefine_model extends CI_Model
     //get predefine orientations
 	public function get_orientations()
 	{
-		$query = $this->db->get('ad_predefine_orientations');
-		return $query->result();
+        $qr = '"Orientation"';
+        // $this->db->like('name_array', $qr);
+        // $res = $this->db->get('custom_fields');
+		// $query = $this->db->get('ad_predefine_orientations');
+		// return $query->result();
+        $field_option = $this->db->select('*')->from('custom_fields')->where("name_array LIKE '%$qr%'")->get()->row()->id;
+        // $res = $this->db
+        //     ->select('*')
+        //     ->from('custom_fields_options')
+        //     ->where("field_id =", "$field_option")
+        //     ->get()
+        //     ->result();
+        $res = $this->db->query("SELECT t1.*, t2.option_name, t2.lang_id FROM (SELECT * FROM custom_fields_options WHERE field_id = $field_option) t1 LEFT JOIN custom_fields_options_lang t2  ON t1.id = t2.option_id");
+
+        return $res->result();
 	}
 
     //get orientations item
@@ -285,6 +304,17 @@ class Predefine_model extends CI_Model
         $id = clean_number($id);
         $this->db->where('id', $id);
         return $this->db->delete('ad_predefine_printsizes');
+    }
+
+    //get printsizes item
+    public function get_printsizes_by_material($material_id, $orient_id)
+    {
+        $material_id = clean_number($material_id);
+        $orient_id = clean_number($orient_id);
+        $this->db->where('materials', $material_id);
+        $this->db->where('orientations', $orient_id);
+        $query = $this->db->get('ad_predefine_printsizes');
+        return $query->result();
     }
 
     // -------------------------------------------
@@ -425,6 +455,15 @@ class Predefine_model extends CI_Model
         return $query->row();
     }
 
+    //get framestyles item by material id
+    public function get_framestyles_item_by_material_id($material_id)
+    {
+        $material_id = clean_number($material_id);
+        $this->db->where('materials', $material_id);
+        $query = $this->db->get('ad_predefine_framestyles');
+        return $query->result();
+    }
+
     //update framestyles item
     public function update_framestyles_item($id)
     {
@@ -481,6 +520,31 @@ class Predefine_model extends CI_Model
         return $this->db->update('ad_predefine_minmaxsettings', $data);
     }
     // -------------------------------------------
+
+    //get first value
+	public function get_first_category()
+	{
+		$query = $this->db->get('categories');
+        $ret = $query->row();
+		return $ret->id;
+	}
+
+    public function get_first_product()
+	{
+		$query = $this->db->get('products');
+		$ret = $query->row();
+		return $ret->id;
+	}
+
+    public function get_first_material()
+	{
+		$query = $this->db->get('ad_predefine_materials');
+		$ret = $query->row();
+		return $ret->id;
+	}
+
+    // -------------------------------------------
+
 
 	//get contact message
 	public function get_contact_message($id)

@@ -151,6 +151,11 @@
 <script src="<?= base_url(); ?>assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="<?= base_url(); ?>assets/js/plugins-1.8.js"></script>
 <script src="<?= base_url(); ?>assets/js/script-1.8.min.js"></script>
+
+<!-- iCheck js -->
+<script src="<?php echo base_url(); ?>assets/admin/vendor/icheck/icheck.min.js"></script>
+<script src="<?= base_url(); ?>assets/admin/js/iCheck.js"></script>
+
 <?php if (!empty($this->session->userdata('mds_send_email_data'))): ?>
 <script>$(document).ready(function () {var data = JSON.parse(<?= json_encode($this->session->userdata("mds_send_email_data"));?>);if (data) {data[mds_config.csfr_token_name] = $.cookie(mds_config.csfr_cookie_name);data["sys_lang_id"] = mds_config.sys_lang_id;$.ajax({type: "POST", url: "<?= base_url(); ?>mds-send-email-post", data: data, success: function (response) {}});}});</script>
 <?php endif;$this->session->unset_userdata('mds_send_email_data'); ?>
@@ -167,6 +172,7 @@ endif; ?>
 <?php if ($this->general_settings->pwa_status == 1): ?>
 if ('serviceWorker' in navigator) {window.addEventListener('load', function () {navigator.serviceWorker.register('<?= base_url();?>pwa-sw.js').then(function (registration) {}, function (err) {console.log('ServiceWorker registration failed: ', err);}).catch(function (err) {console.log(err);});});} else {console.log('service worker is not supported');}
 <?php endif; ?>
+
 </script>
 
 <?php if (!empty($video) || !empty($audio)): ?>

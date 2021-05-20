@@ -169,6 +169,7 @@ if (!function_exists('get_product_form_data')) {
             if (!check_product_stock($product)) {
                 $disabled = " disabled";
             }
+            // $product->price = 12345;
             if ($product->listing_type == 'sell_on_site' || $product->listing_type == 'license_key') {
                 if ($product->is_free_product != 1) {
                     $data->add_to_cart_url = base_url() . 'add-to-cart';

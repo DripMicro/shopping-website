@@ -1,3 +1,44 @@
+<style>
+.slidecontainer {
+  width: 100%;
+}
+
+.slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 25px;
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+.slider:hover {
+  opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  background: #04AA6D;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  background: #04AA6D;
+  cursor: pointer;
+}
+
+.jt-content-bet{
+    display:flex;
+    justify-content: space-between;
+}
+</style>
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 <?php if ($product->listing_type == 'sell_on_site' || $product->listing_type == 'license_key'): ?>
     <div class="form-box form-box-price">
@@ -14,6 +55,15 @@
                             <input type="hidden" name="currency" value="<?= $this->default_currency->code; ?>">
                             <input type="text" name="price" id="product_price_input" aria-describedby="basic-addon1" class="form-control form-input price-input validate-price-input" value="<?php echo ($product->price != 0) ? get_price($product->price, 'input') : ''; ?>" placeholder="<?php echo $this->input_initial_price; ?>" onpaste="return false;" maxlength="32" <?= $product->is_free_product != 1 ? 'required' : ''; ?>>
                         </div>
+
+                        <div class="slidecontainer">
+                            <input type="range" min="<?php echo $range_price->min_value; ?>" max="<?php echo $range_price->max_value;?>" step="0.01" value="<?php echo ($product->price != 0) ? get_price($product->price, 'input') : ''; ?>" class="slider" id="myRange">
+                            <div class="jt-content-bet">
+                                <span>Min: <?php echo $range_price->min_value; ?></span>
+                                <span>Max: <?php echo $range_price->max_value;?></span>
+                            </div>
+                        </div>
+                        
                     </div>
                     <div class="col-xs-12 col-sm-4 m-b-sm-15">
                         <div class="row align-items-center">
@@ -166,6 +216,7 @@
         var thousands_separator = '<?php echo $this->thousands_separator; ?>';
         var commission_rate = '<?php echo $this->general_settings->commission_rate; ?>';
         $(document).on("input keyup paste change", "#product_price_input", function () {
+            $("#myRange").val($(this).val())
             calculate_earn_amount();
         });
         $(document).on("input keyup paste change", "#input_discount_rate", function () {
@@ -187,6 +238,7 @@
             if (isNaN(parseFloat(val)) || val < 0 || val > 100) {
                 $(this).val('');
             }
+            
             calculate_earn_amount();
         });
 
@@ -229,6 +281,15 @@
             $("#calculated_amount").html(calculated_amount);
             $("#vat_amount").html(vat_amount);
             $("#earned_amount").html(earned_amount);
+        }
+
+        var slider = document.getElementById("myRange");
+        var price = document.getElementById("product_price_input")
+        price.value = slider.value
+
+        slider.oninput = function() {
+            price.value = this.value
+            calculate_earn_amount()
         }
     </script>
 <?php endif; ?>

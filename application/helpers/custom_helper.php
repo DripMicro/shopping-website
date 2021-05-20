@@ -1138,6 +1138,15 @@ if (!function_exists('get_product_wishlist_count')) {
     }
 }
 
+//get id by material name
+if (!function_exists('get_id_by_material_name')) {
+    function get_id_by_material_name($material_name)
+    {
+        $ci =& get_instance();
+        return $ci->predefine_model->get_id_by_material_name($material_name);
+    }
+}
+
 //get product wishlist count
 if (!function_exists('get_user_wishlist_products_count')) {
     function get_user_wishlist_products_count($user_id)

@@ -250,6 +250,7 @@ class Product_controller extends Admin_Core_Controller
         $this->load->view('admin/includes/_header', $data);
         $this->load->view('admin/product/product_details', $data);
         $this->load->view('admin/includes/_footer');
+        
     }
 
     /**

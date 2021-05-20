@@ -218,7 +218,7 @@ class Dashboard_controller extends Home_Core_Controller
         $data["product_variations"] = $this->variation_model->get_product_variations($data["product"]->id);
         $data["user_variations"] = $this->variation_model->get_variation_by_user_id($data["product"]->user_id);
         $data['product_settings'] = $this->settings_model->get_product_settings();
-        
+        $data['range_price'] = $this->predefine_model->get_minmaxprice();
         $data['license_keys'] = $this->product_model->get_license_keys($data["product"]->id);
 
         //shipping

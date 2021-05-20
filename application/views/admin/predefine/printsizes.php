@@ -19,6 +19,8 @@
                                             <?php $this->load->view('admin/includes/_messages'); ?>
                                         </div>
                                     </div>
+
+                                   
                                     <div class="row">
                                         <div class="col-sm-12">
                                             <div class="table-responsive">
@@ -47,10 +49,10 @@
                                                                     }
                                                                 }
                                                             ?></td>
-                                                            <td><?php 
+                                                            <td><?php
                                                                 foreach($pre_orientations as $orientation){
-                                                                    if($orientation->id == $item->orientations){
-                                                                        echo $orientation->orientations;
+                                                                    if($orientation->id == $item->orientations && $this->selected_lang->id == $orientation->lang_id){
+                                                                        echo $orientation->option_name;
                                                                         break;
                                                                     }
                                                                 }

@@ -19,10 +19,11 @@ if (!empty($product_images)) {
 <?php else: ?>
     <div class="product-slider-container">
         <?php if (item_count($product_images) > 1): ?>
+        <?php $product_images = array_reverse($product_images); ?>
             <div class="left">
                 <div class="product-slider-content">
                     <div id="product_thumbnails_slider" class="product-thumbnails-slider">
-                        <?php foreach ($product_images as $image): ?>
+                        <?php  foreach ($product_images as $image): ?>
                             <div class="item">
                                 <div class="item-inner">
                                     <img src="<?php echo IMG_BASE64_1x1; ?>" class="img-bg" alt="slider-bg">

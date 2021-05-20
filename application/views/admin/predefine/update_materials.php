@@ -20,12 +20,12 @@
 					</div>
 				</div>
 
-				<div class="row">
+				<!-- <div class="row">
 					<div class="col">
 						<label><?php echo trans("own_price")."($)"; ?></label>
 						<input name="add_price" class="form-control" type="number"  value="<?php echo $item->price; ?>" required>
 					</div>
-				</div>
+				</div> -->
 			</div>
 			<!-- /.box-body -->
 			<div class="box-footer">

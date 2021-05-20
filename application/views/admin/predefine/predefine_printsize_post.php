@@ -16,14 +16,36 @@
 
         <div class="item-table-filter">
             <label><?php echo trans('orientations'); ?></label>
-            <select id="orientations" name="orientation" class="form-control">
+            <!-- <select id="orientations" name="orientation" class="form-control">
                 <?php
                 foreach ($pre_orientations as $item): ?>
                     <option value="<?php echo $item->id; ?>">
                         <?php echo $item->orientations; ?>
                     </option>
                 <?php endforeach; ?>
-            </select>
+            </select> -->
+            <?php 
+                foreach ($custom_fields as $custom_field):
+                    if (!empty($custom_field)):
+                        $custom_field_name = parse_serialized_name_array($custom_field->name_array, $this->selected_lang->id);
+                        ?>
+                        <!-- <div><?php echo $custom_field_name; ?></div> -->
+                        <?php if ($custom_field->field_type == "radio_button" && $custom_field_name == "Orientation"): ?>
+                            <select name="orientation" class="form-control custom-select">
+                                <?php $field_options = $this->field_model->get_field_options($custom_field, $this->selected_lang->id);
+                                $field_values = $this->field_model->get_product_custom_field_values($custom_field->id, $product_id, $this->selected_lang->id);
+                                $selected_option_ids = get_array_column_values($field_values, 'selected_option_id');
+                                if (!empty($field_options)):
+                                    foreach ($field_options as $field_option):?>
+                                        <option value="<?= $field_option->id; ?>"><?= get_custom_field_option_name($field_option); ?></option>
+                                    <?php endforeach;
+                                endif; ?>
+                            </select>
+                        <?php endif; ?>
+            <?php
+                    endif;
+                endforeach;
+            ?>
         </div>
 
         <div class="item-table-filter">
