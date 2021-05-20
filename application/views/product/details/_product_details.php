@@ -241,7 +241,7 @@
                                 <div class="custom-control custom-control-variation custom-control-validate-input">
                                     <input type="radio" name="framestyle" value="<?php echo $framestyle->id;?>" id="checkbox_<?php echo $framestyle->id;?>" data-value="<?php echo $framestyle->price?>" class="custom-control-input" <?php echo $key == 0?'checked':''; ?> onchange="calculat_price($(this).val(), $(this).attr('data-value'), variation_type = 'framestyle')" required>
                                     <label for="checkbox_<?php echo $framestyle->id;?>" data-input-name="variation_<?php echo $framestyle->id;?>" class="custom-control-label custom-control-label-image label-variation_<?php echo $framestyle->id;?>">
-                                        <img src="<?php echo $framestyle->image;?>" class="img-variation-option" data-toggle="tooltip" data-placement="top" title="<?php echo $framestyle->framestyles;?>" alt="<?php echo $framestyle->framestyles;?>">
+                                        <img src="<?= base_url(); ?><?php echo $framestyle->image;?>" class="img-variation-option" data-toggle="tooltip" data-placement="top" title="<?php echo $framestyle->framestyles;?>" alt="<?php echo $framestyle->framestyles;?>">
                                     </label>
                                 </div>
                        <?php  $key++;}}}?>
@@ -406,7 +406,7 @@
                                 codeStringFrameStyle += "<input type='radio' name='framestyle' value='"+framestyle[f].id+"' id='checkbox_"+framestyle[f].id+"' data-value='"+framestyle[f].price+"' class='custom-control-input' required>"
                             }
                             codeStringFrameStyle += "<label for='checkbox_"+framestyle[f].id+"' data-input-name='variation_"+framestyle[f].id+"' class='custom-control-label custom-control-label-image label-variation_"+framestyle[f].id+"'>"
-                            codeStringFrameStyle += "<img src='"+framestyle[f].image+"' class='img-variation-option' data-toggle='tooltip' data-placement='top' title='"+framestyle[f].framestyles+"' alt='"+framestyle[f].framestyles+"'>"
+                            codeStringFrameStyle += "<img src='<?= base_url(); ?>"+framestyle[f].image+"' class='img-variation-option' data-toggle='tooltip' data-placement='top' title='"+framestyle[f].framestyles+"' alt='"+framestyle[f].framestyles+"'>"
                             codeStringFrameStyle += "</label>"
                             codeStringFrameStyle += "</div>"
                             key++
@@ -440,7 +440,7 @@
                                 codeStringFrameStyle += "<input type='radio' name='framestyle' value='"+framestyle[f].id+"' id='checkbox_"+framestyle[f].id+"' data-value='"+framestyle[f].price+"' class='custom-control-input' required>"
                             }
                             codeStringFrameStyle += "<label for='checkbox_"+framestyle[f].id+"' data-input-name='variation_"+framestyle[f].id+"' class='custom-control-label custom-control-label-image label-variation_"+framestyle[f].id+"'>"
-                            codeStringFrameStyle += "<img src='"+framestyle[f].image+"' class='img-variation-option' data-toggle='tooltip' data-placement='top' title='"+framestyle[f].framestyles+"' alt='"+framestyle[f].framestyles+"'>"
+                            codeStringFrameStyle += "<img src='<?= base_url(); ?>"+framestyle[f].image+"' class='img-variation-option' data-toggle='tooltip' data-placement='top' title='"+framestyle[f].framestyles+"' alt='"+framestyle[f].framestyles+"'>"
                             codeStringFrameStyle += "</label>"
                             codeStringFrameStyle += "</div>"
                             key++
@@ -474,7 +474,7 @@
                                 codeStringFrameStyle += "<input type='radio' name='framestyle' value='"+framestyle[f].id+"' id='checkbox_"+framestyle[f].id+"' data-value='"+framestyle[f].price+"' class='custom-control-input' required>"
                             }
                             codeStringFrameStyle += "<label for='checkbox_"+framestyle[f].id+"' data-input-name='variation_"+framestyle[f].id+"' class='custom-control-label custom-control-label-image label-variation_"+framestyle[f].id+"'>"
-                            codeStringFrameStyle += "<img src='"+framestyle[f].image+"' class='img-variation-option' data-toggle='tooltip' data-placement='top' title='"+framestyle[f].framestyles+"' alt='"+framestyle[f].framestyles+"'>"
+                            codeStringFrameStyle += "<img src='<?= base_url(); ?>"+framestyle[f].image+"' class='img-variation-option' data-toggle='tooltip' data-placement='top' title='"+framestyle[f].framestyles+"' alt='"+framestyle[f].framestyles+"'>"
                             codeStringFrameStyle += "</label>"
                             codeStringFrameStyle += "</div>"
                             key++
