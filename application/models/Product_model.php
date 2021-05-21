@@ -1185,7 +1185,6 @@ class Product_model extends CI_Model
     //get option id by product_id
     public function get_orientation_id($id)
     {
-
         $select = "SELECT selected_option_id FROM custom_fields_product WHERE product_id = '$id' AND product_filter_key = 'orientation'";
         $res = $this->db->query($select)->row();
 

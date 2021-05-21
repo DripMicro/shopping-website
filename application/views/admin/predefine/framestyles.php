@@ -36,20 +36,24 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
+                                                    <?php $material_status = 0; $material_name = "";?>
                                                     <?php foreach ($pre_framestyles as $item): ?>
+                                                        <?php 
+                                                            foreach($pre_materials as $material){
+                                                                if($material->id == $item->materials){
+                                                                    $material_name = $material->materials;
+                                                                    $material_status = 1;
+                                                                    break;
+                                                                }
+                                                            }
+                                                        ?>
+                                                        <?php if($material_status == 1):?>
                                                         <tr>
                                                             <td>#<?php echo $item->id; ?></td>
                                                             <td>
                                                                 <img src="<?= base_url() . $item->image; ?>" style="max-width: 70px; max-height: 70px;">
                                                             </td>
-                                                            <td><?php 
-                                                                foreach($pre_materials as $material){
-                                                                    if($material->id == $item->materials){
-                                                                        echo $material->materials;
-                                                                        break;
-                                                                    }
-                                                                }
-                                                            ?></td>
+                                                            <td><?php echo $material_name; $material_status = 0;?></td>
                                                             <td><?php echo $item->framestyles; ?></td>
                                                             <td><?php echo $item->price; ?></td>
                                                             <td><?php echo $item->date; ?></td>
@@ -71,6 +75,7 @@
                                                                 </div>
                                                             </td>
                                                         </tr>
+                                                    <?php endif; ?>
                                                     <?php endforeach; ?>
                                                     </tbody>
                                                 </table>

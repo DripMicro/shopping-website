@@ -38,17 +38,21 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
+                                                    <?php $material_status = 0; $material_name = "";?>
                                                     <?php foreach ($pre_printsizes as $item): ?>
+                                                        <?php 
+                                                            foreach($pre_materials as $material){
+                                                                if($material->id == $item->materials){
+                                                                    $material_name = $material->materials;
+                                                                    $material_status = 1;
+                                                                    break;
+                                                                }
+                                                            }
+                                                        ?>
+                                                        <?php if($material_status == 1):?>
                                                         <tr>
                                                             <td>#<?php echo $item->id; ?></td>
-                                                            <td><?php 
-                                                                foreach($pre_materials as $material){
-                                                                    if($material->id == $item->materials){
-                                                                        echo $material->materials;
-                                                                        break;
-                                                                    }
-                                                                }
-                                                            ?></td>
+                                                            <td><?php echo $material_name; $material_status = 0;?></td>
                                                             <td><?php
                                                                 foreach($pre_orientations as $orientation){
                                                                     if($orientation->id == $item->orientations && $this->selected_lang->id == $orientation->lang_id){
@@ -78,6 +82,7 @@
                                                                 </div>
                                                             </td>
                                                         </tr>
+                                                    <?php endif; ?>
                                                     <?php endforeach; ?>
                                                     </tbody>
                                                 </table>

@@ -148,7 +148,7 @@ class Admin_controller extends Admin_Core_Controller
     public function pre_materials()
     {
         $data['title'] = trans("pre_materials");
-        $data['pre_materials'] = $this->predefine_model->get_materials();
+        $data['pre_materials'] = $this->predefine_model->_get_materials();
         
         $this->load->view('admin/includes/_header', $data);
         $this->load->view('admin/predefine/materials', $data);
@@ -374,6 +374,25 @@ class Admin_controller extends Admin_Core_Controller
         $this->load->view('admin/includes/_header', $data);
         $this->load->view('admin/predefine/update_materials', $data);
         $this->load->view('admin/includes/_footer');
+    }
+
+    /**
+     * Update materials Item Post
+     */
+    public function predefine_setting_update_status_post()
+    {
+        //item id
+        $id = $this->input->post('id', true);
+        $status = $this->input->post('status', true);
+
+        $status = $status==1?0:1;
+        if ($this->predefine_model->update_materials_item_status($id, $status)) {
+            $this->session->set_flashdata('success', trans("msg_updated"));
+            redirect(admin_url() . 'pre-materials');
+        } else {
+            $this->session->set_flashdata('error', trans("msg_error"));
+            redirect($this->agent->referrer());
+        }
     }
 
     /**

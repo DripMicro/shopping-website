@@ -151,8 +151,16 @@ class Predefine_model extends CI_Model
         $this->db->insert('ad_predefine_materials', $data);
     }
     //get predefine materials
+	public function _get_materials()
+	{
+		$query = $this->db->get('ad_predefine_materials');
+		return $query->result();
+	}
+
+    //get predefine materials
 	public function get_materials()
 	{
+        $this->db->where('status', '1');
 		$query = $this->db->get('ad_predefine_materials');
 		return $query->result();
 	}
@@ -168,16 +176,36 @@ class Predefine_model extends CI_Model
 
     public function get_id_by_material_name($material_name)
     {
-        $this->db->where('materials', $material_name);
-        $query = $this->db->get('ad_predefine_materials');
-        return $query->row()->id;
+        // echo "<h1>".$material_name."</h1>";
+        // $this->db->where('materials', $material_name);
+        // $query = $this->db->get('ad_predefine_materials');
+
+        // return $query->row()->id;
+
+        $select = "SELECT id FROM ad_predefine_materials WHERE materials = '$material_name'";
+        $res = $this->db->query($select)->row();
+
+        if(!empty($res)) return $res->id;
+        else return "300";
     }
+
     //update materials item
     public function update_materials_item($id)
     {
         $data = array(
             'materials' => $this->input->post('add_materials', true),
             // 'price' => $this->input->post('add_price', true),
+        );
+
+        $this->db->where('id', $id);
+        return $this->db->update('ad_predefine_materials', $data);
+    }
+
+    //update materials item status
+    public function update_materials_item_status($id, $status)
+    {
+        $data = array(
+            'status' => $status,
         );
 
         $this->db->where('id', $id);
@@ -538,6 +566,7 @@ class Predefine_model extends CI_Model
 
     public function get_first_material()
 	{
+        $this->db->where('status', '1');
 		$query = $this->db->get('ad_predefine_materials');
 		$ret = $query->row();
 		return $ret->id;
