@@ -33,6 +33,7 @@
                                                             <th><?php echo trans('orientations'); ?></th>
                                                             <th><?php echo trans('pre_print_size'); ?></th>
                                                             <th><?php echo trans('price'); ?></th>
+                                                            <th><?php echo trans('status'); ?></th>
                                                             <th><?php echo trans('date'); ?></th>
                                                             <th></th>
                                                         </tr>
@@ -63,6 +64,13 @@
                                                             ?></td>
                                                             <td><?php echo $item->size; ?></td>
                                                             <td><?php echo $item->price; ?></td>
+                                                            <td>
+                                                                <?php if ($item->status == 1): ?>
+                                                                    <label class="label label-success"><?php echo trans("enable"); ?></label>
+                                                                <?php else: ?>
+                                                                    <label class="label label-default"><?php echo trans("disable"); ?></label>
+                                                                <?php endif; ?>
+                                                            </td>
                                                             <td><?php echo $item->date; ?></td>
                                                             <td style="width:100px;">
                                                                 <div class="dropdown">
@@ -72,6 +80,13 @@
                                                                         <span class="caret"></span>
                                                                     </button>
                                                                     <ul class="dropdown-menu options-dropdown">
+                                                                        <?php echo form_open('admin_controller/predefine_printsizes_update_status_post'); ?>
+                                                                            <input name="id" type="hidden" value="<?php echo $item->id; ?>">
+                                                                            <input name="status" type="hidden" value="<?php echo $item->status; ?>">
+                                                                            <li>
+                                                                                <button type="submit"><i class="fa fa-eye<?php echo $item->status != 1?"":"-slash"; ?> option-icon"></i><?php echo $item->status == 1?trans("disable"):trans("enable"); ?></button>
+                                                                            </li>
+                                                                        <?php echo form_close(); ?>
                                                                         <li>
                                                                             <a href="<?php echo admin_url(); ?>update-pre-printsizes/<?php echo html_escape($item->id); ?>"><i class="fa fa-edit option-icon"></i><?php echo trans('edit'); ?></a>
                                                                         </li>

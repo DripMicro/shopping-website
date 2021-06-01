@@ -503,6 +503,14 @@ class Auth_model extends CI_Model
         return $query->row();
     }
 
+    //get admin
+    public function get_admin_user()
+    {
+        $this->db->where('role', 'admin');
+        $query = $this->db->get('users');
+        return $query->row();
+    }
+
     //get user by email
     public function get_user_by_email($email)
     {

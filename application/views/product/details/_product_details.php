@@ -177,7 +177,6 @@
             <?php if(!empty($printsizes)){?>
                 <div class="col-sm-<?php echo $first_material == get_id_by_material_name('Canvas')?'6':'12'; ?> col-xs-12">
                     
-                                    
                 <?php if($first_material == get_id_by_material_name('Metal')){?>
                     <div class="row">
                         <div class="col-sm-12 col-xs-12">
@@ -185,11 +184,13 @@
                         </div>
 
                         <?php foreach($printsizes as $key => $printsize){
-                            if($printsize->materials == $first_material && $printsize->orientations == $orientation){?>
-                                <div class="col-sm-4 col-xs-12 col-option">
-                                    <input type="radio" name="select_size_metal" value="<?php echo $printsize->id;?>" id="select_size_<?php echo $printsize->id;?>" data-value="<?php echo $printsize->price;?>" onchange="calculat_price($(this).val(), $(this).attr('data-value'), variation_type = 'printsize')" class="square-purple sz-20" <?php echo $key == 0?'checked':''; ?> required>
-                                    <label for="select_size_<?php echo $printsize->id?>" class="option-label trans-y">&nbsp;<?php echo $printsize->size;?></label>
-                                </div>
+                            if($printsize->materials == $first_material && $printsize->orientations == $orientation){
+                                if($material->status == 1):?>                            
+                                    <div class="col-sm-4 col-xs-12 col-option">
+                                        <input type="radio" name="select_size_metal" value="<?php echo $printsize->id;?>" id="select_size_<?php echo $printsize->id;?>" data-value="<?php echo $printsize->price;?>" onchange="calculat_price($(this).val(), $(this).attr('data-value'), variation_type = 'printsize')" class="square-purple sz-20" <?php echo $key == 0?'checked':''; ?> required>
+                                        <label for="select_size_<?php echo $printsize->id?>" class="option-label trans-y">&nbsp;<?php echo $printsize->size;?></label>
+                                    </div>
+                                <?php endif ?>
                         <?php }}?>
                     </div>
                 <?php }else{?>
@@ -199,8 +200,10 @@
                             
                             <select name="select_size" class="form-control" onchange="calculat_price($(this).val(), $(this).find('option:selected').attr('data-value'), variation_type = 'printsize')">
                                 <?php foreach($printsizes as $printsize){
-                                    if($printsize->materials == $first_material && $printsize->orientations == $orientation){?>
-                                        <option value="<?php echo $printsize->id?>" data-value="<?php echo $printsize->price?>"><?php echo $printsize->size;?></option>
+                                    if($printsize->materials == $first_material && $printsize->orientations == $orientation){
+                                        if($printsize->status == 1):?>
+                                            <option value="<?php echo $printsize->id?>" data-value="<?php echo $printsize->price?>"><?php echo $printsize->size;?></option>
+                                        <?php endif ?>
                                 <?php }}?>
                             </select>
                         </div>
@@ -216,8 +219,10 @@
                             <label><?php echo trans('pre_canvas_depth'); ?></label>
                             <select name="canvas_depth" class="form-control" onchange="calculat_price($(this).val(), $(this).find('option:selected').attr('data-value'), variation_type = 'canvasdepth')">
                             <?php if(!empty($canvasdepths)){
-                                foreach($canvasdepths as $canvasdepth){ ?>
-                                    <option value="<?php echo $canvasdepth->id;?>" data-value="<?php echo $canvasdepth->price?>"><?php echo $canvasdepth->canvasdepths;?></option>
+                                foreach($canvasdepths as $canvasdepth){ 
+                                    if($canvasdepth->status == 1):?>
+                                        <option value="<?php echo $canvasdepth->id;?>" data-value="<?php echo $canvasdepth->price?>"><?php echo $canvasdepth->canvasdepths;?></option>
+                                    <?php endif ?>
                                 <?php }}?>
                             </select>
                         </div>
@@ -230,8 +235,6 @@
     </div>
 </div>
 
-
-
 <div class="row" id="finish_option">
     <div class="col-12">
         <div class="form-group">
@@ -240,11 +243,13 @@
                     <label><?php echo trans('select_finish').":"; ?></label>
                 </div>
                 <?php if(!empty($finishoptions)){
-                    foreach($finishoptions as $key => $finishoption){ ?>
-                        <div class="col-sm-2 col-xs-12 col-option">
-                            <input type="radio" name="finish_option" value="<?php echo $finishoption->id;?>" data-value="<?php echo $finishoption->price?>" id="finish_option<?php echo $finishoption->id;?>" class="square-purple sz-20" <?php echo $key == 0?'checked':''; ?> onchange="calculat_price($(this).val(), $(this).attr('data-value'), variation_type = 'finishoption')" required>
-                            <label for="finish_option<?php echo $finishoption->id;?>" class="option-label trans-y"><?php echo $finishoption->finishoptions;?></label>
-                        </div>
+                    foreach($finishoptions as $key => $finishoption){ 
+                        if($finishoption->status == 1):?>
+                            <div class="col-sm-2 col-xs-12 col-option">
+                                <input type="radio" name="finish_option" value="<?php echo $finishoption->id;?>" data-value="<?php echo $finishoption->price?>" id="finish_option<?php echo $finishoption->id;?>" class="square-purple sz-20" <?php echo $key == 0?'checked':''; ?> onchange="calculat_price($(this).val(), $(this).attr('data-value'), variation_type = 'finishoption')" required>
+                                <label for="finish_option<?php echo $finishoption->id;?>" class="option-label trans-y"><?php echo $finishoption->finishoptions;?></label>
+                            </div>
+                        <?php endif ?>
                 <?php }}?>
                 
                 <div class="col-sm-2 col-xs-12 col-option">
@@ -266,13 +271,15 @@
                     <?php if(!empty($framestyles)){
                         $key = 0;
                         foreach($framestyles as $framestyle){ 
-                            if($framestyle->materials == $first_material){ ?>
-                                <div class="custom-control custom-control-variation custom-control-validate-input">
-                                    <input type="radio" name="framestyle" value="<?php echo $framestyle->id;?>" id="checkbox_<?php echo $framestyle->id;?>" data-value="<?php echo $framestyle->price?>" class="custom-control-input" <?php echo $key == 0?'checked':''; ?> onchange="calculat_price($(this).val(), $(this).attr('data-value'), variation_type = 'framestyle')" required>
-                                    <label for="checkbox_<?php echo $framestyle->id;?>" data-input-name="variation_<?php echo $framestyle->id;?>" class="custom-control-label custom-control-label-image label-variation_<?php echo $framestyle->id;?>">
-                                        <img src="<?= base_url(); ?><?php echo $framestyle->image;?>" class="img-variation-option" data-toggle="tooltip" data-placement="top" title="<?php echo $framestyle->framestyles;?>" alt="<?php echo $framestyle->framestyles;?>">
-                                    </label>
-                                </div>
+                            if($framestyle->materials == $first_material){ 
+                                if($framestyle->status == 1):?>
+                                    <div class="custom-control custom-control-variation custom-control-validate-input">
+                                        <input type="radio" name="framestyle" value="<?php echo $framestyle->id;?>" id="checkbox_<?php echo $framestyle->id;?>" data-value="<?php echo $framestyle->price?>" class="custom-control-input" <?php echo $key == 0?'checked':''; ?> onchange="calculat_price($(this).val(), $(this).attr('data-value'), variation_type = 'framestyle')" required>
+                                        <label for="checkbox_<?php echo $framestyle->id;?>" data-input-name="variation_<?php echo $framestyle->id;?>" class="custom-control-label custom-control-label-image label-variation_<?php echo $framestyle->id;?>">
+                                            <img src="<?= base_url(); ?><?php echo $framestyle->image;?>" class="img-variation-option" data-toggle="tooltip" data-placement="top" title="<?php echo $framestyle->framestyles;?>" alt="<?php echo $framestyle->framestyles;?>">
+                                        </label>
+                                    </div>
+                                <?php endif ?>
                        <?php  $key++;}}}?>
                 </div>
             </div>
@@ -421,7 +428,9 @@
                             codeString += "<label><?php echo trans('select_size'); ?></label>"
                             codeString += "<select name='select_size' class='form-control'>"
                             for(let r in printsize){
-                                codeString += "<option value='"+printsize[r].id+"' data-value='"+printsize[r].price+"'>"+printsize[r].size+"</option>"
+                                if(printsize[r].status == '1'){
+                                    codeString += "<option value='"+printsize[r].id+"' data-value='"+printsize[r].price+"'>"+printsize[r].size+"</option>"
+                                }
                             }
                             codeString += "</select>"
                             codeString += "</div>"
@@ -434,7 +443,9 @@
                             codeString += "<label><?php echo trans('pre_canvas_depth'); ?></label>"
                             codeString += "<select name='canvas_depth' class='form-control'>"
                             for(let r in canvasdepth){
-                                codeString += "<option value='"+canvasdepth[r].id+"' data-value='"+canvasdepth[r].price+"'>"+canvasdepth[r].canvasdepths+"</option>"
+                                if(canvasdepth[r].status == '1'){
+                                    codeString += "<option value='"+canvasdepth[r].id+"' data-value='"+canvasdepth[r].price+"'>"+canvasdepth[r].canvasdepths+"</option>"
+                                }
                             }
                             codeString += "</select>"
                             codeString += "</div>"
@@ -447,17 +458,19 @@
 
                             let key = 0
                             for(let f in framestyle){
-                                codeStringFrameStyle += "<div class='custom-control custom-control-variation custom-control-validate-input'>"
-                                if(key == 0){
-                                    codeStringFrameStyle += "<input type='radio' name='framestyle' value='"+framestyle[f].id+"' id='checkbox_"+framestyle[f].id+"' data-value='"+framestyle[f].price+"' class='custom-control-input' checked required>"
-                                }else{
-                                    codeStringFrameStyle += "<input type='radio' name='framestyle' value='"+framestyle[f].id+"' id='checkbox_"+framestyle[f].id+"' data-value='"+framestyle[f].price+"' class='custom-control-input' required>"
+                                if(framestyle[f].status == '1'){
+                                    codeStringFrameStyle += "<div class='custom-control custom-control-variation custom-control-validate-input'>"
+                                    if(key == 0){
+                                        codeStringFrameStyle += "<input type='radio' name='framestyle' value='"+framestyle[f].id+"' id='checkbox_"+framestyle[f].id+"' data-value='"+framestyle[f].price+"' class='custom-control-input' checked required>"
+                                    }else{
+                                        codeStringFrameStyle += "<input type='radio' name='framestyle' value='"+framestyle[f].id+"' id='checkbox_"+framestyle[f].id+"' data-value='"+framestyle[f].price+"' class='custom-control-input' required>"
+                                    }
+                                    codeStringFrameStyle += "<label for='checkbox_"+framestyle[f].id+"' data-input-name='variation_"+framestyle[f].id+"' class='custom-control-label custom-control-label-image label-variation_"+framestyle[f].id+"'>"
+                                    codeStringFrameStyle += "<img src='<?= base_url(); ?>"+framestyle[f].image+"' class='img-variation-option' data-toggle='tooltip' data-placement='top' title='"+framestyle[f].framestyles+"' alt='"+framestyle[f].framestyles+"'>"
+                                    codeStringFrameStyle += "</label>"
+                                    codeStringFrameStyle += "</div>"
+                                    key++
                                 }
-                                codeStringFrameStyle += "<label for='checkbox_"+framestyle[f].id+"' data-input-name='variation_"+framestyle[f].id+"' class='custom-control-label custom-control-label-image label-variation_"+framestyle[f].id+"'>"
-                                codeStringFrameStyle += "<img src='<?= base_url(); ?>"+framestyle[f].image+"' class='img-variation-option' data-toggle='tooltip' data-placement='top' title='"+framestyle[f].framestyles+"' alt='"+framestyle[f].framestyles+"'>"
-                                codeStringFrameStyle += "</label>"
-                                codeStringFrameStyle += "</div>"
-                                key++
                             }
                         }else{
                             $("#finish_option").hide();
@@ -481,28 +494,32 @@
 
                             let first_size = 0;
                             for(let r in printsize){
-                                codeString += "<div class='col-sm-4 col-xs-12 col-option'>"
-                                if(first_size == 0) codeString += "<input type='radio' name='select_size_metal' value='"+printsize[r].id+"' id='select_size_"+printsize[r].id+"' data-value='"+printsize[r].price+"' class='square-purple sz-20' checked required>"
-                                else codeString += "<input type='radio' name='select_size_metal' value='"+printsize[r].id+"' id='select_size_"+printsize[r].id+"' data-value='"+printsize[r].price+"' class='square-purple sz-20' required>"
-                                codeString += "<label for='select_size_"+printsize[r].id+"' class='option-label trans-y'>&nbsp;"+printsize[r].size+"</label>"
-                                codeString += "</div>"
-                                first_size++
+                                if(printsize[r].status == '1'){
+                                    codeString += "<div class='col-sm-4 col-xs-12 col-option'>"
+                                    if(first_size == 0) codeString += "<input type='radio' name='select_size_metal' value='"+printsize[r].id+"' id='select_size_"+printsize[r].id+"' data-value='"+printsize[r].price+"' class='square-purple sz-20' checked required>"
+                                    else codeString += "<input type='radio' name='select_size_metal' value='"+printsize[r].id+"' id='select_size_"+printsize[r].id+"' data-value='"+printsize[r].price+"' class='square-purple sz-20' required>"
+                                    codeString += "<label for='select_size_"+printsize[r].id+"' class='option-label trans-y'>&nbsp;"+printsize[r].size+"</label>"
+                                    codeString += "</div>"
+                                    first_size++
+                                }
                             }
                             codeString += "</div>"
 
                             let key = 0
                             for(let f in framestyle){
-                                codeStringFrameStyle += "<div class='custom-control custom-control-variation custom-control-validate-input'>"
-                                if(key == 0){
-                                    codeStringFrameStyle += "<input type='radio' name='framestyle' value='"+framestyle[f].id+"' id='checkbox_"+framestyle[f].id+"' data-value='"+framestyle[f].price+"' class='custom-control-input' checked required>"
-                                }else{
-                                    codeStringFrameStyle += "<input type='radio' name='framestyle' value='"+framestyle[f].id+"' id='checkbox_"+framestyle[f].id+"' data-value='"+framestyle[f].price+"' class='custom-control-input' required>"
+                                if(framestyle[f].status == '1'){
+                                    codeStringFrameStyle += "<div class='custom-control custom-control-variation custom-control-validate-input'>"
+                                    if(key == 0){
+                                        codeStringFrameStyle += "<input type='radio' name='framestyle' value='"+framestyle[f].id+"' id='checkbox_"+framestyle[f].id+"' data-value='"+framestyle[f].price+"' class='custom-control-input' checked required>"
+                                    }else{
+                                        codeStringFrameStyle += "<input type='radio' name='framestyle' value='"+framestyle[f].id+"' id='checkbox_"+framestyle[f].id+"' data-value='"+framestyle[f].price+"' class='custom-control-input' required>"
+                                    }
+                                    codeStringFrameStyle += "<label for='checkbox_"+framestyle[f].id+"' data-input-name='variation_"+framestyle[f].id+"' class='custom-control-label custom-control-label-image label-variation_"+framestyle[f].id+"'>"
+                                    codeStringFrameStyle += "<img src='<?= base_url(); ?>"+framestyle[f].image+"' class='img-variation-option' data-toggle='tooltip' data-placement='top' title='"+framestyle[f].framestyles+"' alt='"+framestyle[f].framestyles+"'>"
+                                    codeStringFrameStyle += "</label>"
+                                    codeStringFrameStyle += "</div>"
+                                    key++
                                 }
-                                codeStringFrameStyle += "<label for='checkbox_"+framestyle[f].id+"' data-input-name='variation_"+framestyle[f].id+"' class='custom-control-label custom-control-label-image label-variation_"+framestyle[f].id+"'>"
-                                codeStringFrameStyle += "<img src='<?= base_url(); ?>"+framestyle[f].image+"' class='img-variation-option' data-toggle='tooltip' data-placement='top' title='"+framestyle[f].framestyles+"' alt='"+framestyle[f].framestyles+"'>"
-                                codeStringFrameStyle += "</label>"
-                                codeStringFrameStyle += "</div>"
-                                key++
                             }
                         }else{
                             $("#finish_option").hide();
@@ -523,7 +540,9 @@
                             codeString += "<label><?php echo trans('select_size'); ?></label>"
                             codeString += "<select name='select_size' class='form-control'>"
                             for(let r in printsize){
-                                codeString += "<option value='"+printsize[r].id+"' data-value='"+printsize[r].price+"'>"+printsize[r].size+"</option>"
+                                if(printsize[r].status == '1'){
+                                    codeString += "<option value='"+printsize[r].id+"' data-value='"+printsize[r].price+"'>"+printsize[r].size+"</option>"
+                                }
                             }
                             codeString += "</select>"
                             codeString += "</div>"
@@ -533,17 +552,19 @@
 
                             let key = 0
                             for(let f in framestyle){
-                                codeStringFrameStyle += "<div class='custom-control custom-control-variation custom-control-validate-input'>"
-                                if(key == 0){
-                                    codeStringFrameStyle += "<input type='radio' name='framestyle' value='"+framestyle[f].id+"' id='checkbox_"+framestyle[f].id+"' data-value='"+framestyle[f].price+"' class='custom-control-input' checked required>"
-                                }else{
-                                    codeStringFrameStyle += "<input type='radio' name='framestyle' value='"+framestyle[f].id+"' id='checkbox_"+framestyle[f].id+"' data-value='"+framestyle[f].price+"' class='custom-control-input' required>"
+                                if(framestyle[f].status == '1'){
+                                    codeStringFrameStyle += "<div class='custom-control custom-control-variation custom-control-validate-input'>"
+                                    if(key == 0){
+                                        codeStringFrameStyle += "<input type='radio' name='framestyle' value='"+framestyle[f].id+"' id='checkbox_"+framestyle[f].id+"' data-value='"+framestyle[f].price+"' class='custom-control-input' checked required>"
+                                    }else{
+                                        codeStringFrameStyle += "<input type='radio' name='framestyle' value='"+framestyle[f].id+"' id='checkbox_"+framestyle[f].id+"' data-value='"+framestyle[f].price+"' class='custom-control-input' required>"
+                                    }
+                                    codeStringFrameStyle += "<label for='checkbox_"+framestyle[f].id+"' data-input-name='variation_"+framestyle[f].id+"' class='custom-control-label custom-control-label-image label-variation_"+framestyle[f].id+"'>"
+                                    codeStringFrameStyle += "<img src='<?= base_url(); ?>"+framestyle[f].image+"' class='img-variation-option' data-toggle='tooltip' data-placement='top' title='"+framestyle[f].framestyles+"' alt='"+framestyle[f].framestyles+"'>"
+                                    codeStringFrameStyle += "</label>"
+                                    codeStringFrameStyle += "</div>"
+                                    key++
                                 }
-                                codeStringFrameStyle += "<label for='checkbox_"+framestyle[f].id+"' data-input-name='variation_"+framestyle[f].id+"' class='custom-control-label custom-control-label-image label-variation_"+framestyle[f].id+"'>"
-                                codeStringFrameStyle += "<img src='<?= base_url(); ?>"+framestyle[f].image+"' class='img-variation-option' data-toggle='tooltip' data-placement='top' title='"+framestyle[f].framestyles+"' alt='"+framestyle[f].framestyles+"'>"
-                                codeStringFrameStyle += "</label>"
-                                codeStringFrameStyle += "</div>"
-                                key++
                             }
                         }else{
                             $("#finish_option").hide();

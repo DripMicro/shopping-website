@@ -326,6 +326,17 @@ class Predefine_model extends CI_Model
         return $this->db->update('ad_predefine_printsizes', $data);
     }
 
+    //update printsizes item status
+    public function update_printsizes_item_status($id, $status)
+    {
+        $data = array(
+            'status' => $status,
+        );
+
+        $this->db->where('id', $id);
+        return $this->db->update('ad_predefine_printsizes', $data);
+    }
+
     //delete printsizes item
     public function delete_printsizes_item($id)
     {
@@ -387,6 +398,17 @@ class Predefine_model extends CI_Model
         return $this->db->update('ad_predefine_finishoptions', $data);
     }
 
+    //update finishoptions item status
+    public function update_finishoptions_item_status($id, $status)
+    {
+        $data = array(
+            'status' => $status,
+        );
+
+        $this->db->where('id', $id);
+        return $this->db->update('ad_predefine_finishoptions', $data);
+    }
+
     //delete finishoptions item
     public function delete_finishoptions_item($id)
     {
@@ -437,6 +459,17 @@ class Predefine_model extends CI_Model
         return $this->db->update('ad_predefine_canvasdepths', $data);
     }
 
+    //update canvasdepths item status
+    public function update_canvasdepths_item_status($id, $status)
+    {
+        $data = array(
+            'status' => $status,
+        );
+
+        $this->db->where('id', $id);
+        return $this->db->update('ad_predefine_canvasdepths', $data);
+    }
+
     //delete canvasdepths item
     public function delete_canvasdepths_item($id)
     {
@@ -473,6 +506,7 @@ class Predefine_model extends CI_Model
 		$query = $this->db->get('ad_predefine_framestyles');
 		return $query->result();
 	}
+    
 
     //get framestyles item
     public function get_framestyles_item($id)
@@ -511,6 +545,17 @@ class Predefine_model extends CI_Model
             return $this->db->update('ad_predefine_framestyles', $data);
         }
         return false;
+    }
+
+    //update framestyles item status
+    public function update_framestyles_item_status($id, $status)
+    {
+        $data = array(
+            'status' => $status,
+        );
+
+        $this->db->where('id', $id);
+        return $this->db->update('ad_predefine_framestyles', $data);
     }
 
     //delete framestyles item

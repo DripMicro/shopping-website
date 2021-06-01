@@ -280,7 +280,8 @@ class Home_controller extends Home_Core_Controller
             //related products
             $data["related_products"] = $this->product_model->get_related_products($data["product"]->id, $data["product"]->category_id);
 
-            $data["user"] = $this->auth_model->get_user($data["product"]->user_id);
+            // $data["user"] = $this->auth_model->get_user($data["product"]->user_id);
+            $data["user"] = $this->auth_model->get_admin_user();
 
             //user products
             $data["user_products"] = $this->product_model->get_more_products_by_user($data["user"]->id, $data["product"]->id);

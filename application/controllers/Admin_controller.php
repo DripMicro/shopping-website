@@ -548,6 +548,25 @@ class Admin_controller extends Admin_Core_Controller
     }
 
     /**
+     * Update printsizes Item Post
+     */
+    public function predefine_printsizes_update_status_post()
+    {
+        //item id
+        $id = $this->input->post('id', true);
+        $status = $this->input->post('status', true);
+
+        $status = $status==1?0:1;
+        if ($this->predefine_model->update_printsizes_item_status($id, $status)) {
+            $this->session->set_flashdata('success', trans("msg_updated"));
+            redirect(admin_url() . 'pre-printsizes');
+        } else {
+            $this->session->set_flashdata('error', trans("msg_error"));
+            redirect($this->agent->referrer());
+        }
+    }
+
+    /**
      * Delete printsizes Item Post
      */
     public function delete_printsizes_item_post()
@@ -602,6 +621,25 @@ class Admin_controller extends Admin_Core_Controller
         //item id
         $id = $this->input->post('id', true);
         if ($this->predefine_model->update_finishoptions_item($id)) {
+            $this->session->set_flashdata('success', trans("msg_updated"));
+            redirect(admin_url() . 'pre-finishoptions');
+        } else {
+            $this->session->set_flashdata('error', trans("msg_error"));
+            redirect($this->agent->referrer());
+        }
+    }
+
+    /**
+     * Update finishoptions Item Post
+     */
+    public function predefine_finishoptions_update_status_post()
+    {
+        //item id
+        $id = $this->input->post('id', true);
+        $status = $this->input->post('status', true);
+
+        $status = $status==1?0:1;
+        if ($this->predefine_model->update_finishoptions_item_status($id, $status)) {
             $this->session->set_flashdata('success', trans("msg_updated"));
             redirect(admin_url() . 'pre-finishoptions');
         } else {
@@ -675,6 +713,25 @@ class Admin_controller extends Admin_Core_Controller
     }
 
     /**
+     * Update canvasdepths Item Post
+     */
+    public function predefine_canvasdepths_update_status_post()
+    {
+        //item id
+        $id = $this->input->post('id', true);
+        $status = $this->input->post('status', true);
+
+        $status = $status==1?0:1;
+        if ($this->predefine_model->update_canvasdepths_item_status($id, $status)) {
+            $this->session->set_flashdata('success', trans("msg_updated"));
+            redirect(admin_url() . 'pre-canvasdepths');
+        } else {
+            $this->session->set_flashdata('error', trans("msg_error"));
+            redirect($this->agent->referrer());
+        }
+    }
+
+    /**
      * Delete canvasdepths Item Post
      */
     public function delete_canvasdepths_item_post()
@@ -722,6 +779,25 @@ class Admin_controller extends Admin_Core_Controller
         $this->load->view('admin/includes/_header', $data);
         $this->load->view('admin/predefine/update_framestyles', $data);
         $this->load->view('admin/includes/_footer');
+    }
+
+    /**
+     * Update framestyles Item Post
+     */
+    public function predefine_framestyles_update_status_post()
+    {
+        //item id
+        $id = $this->input->post('id', true);
+        $status = $this->input->post('status', true);
+
+        $status = $status==1?0:1;
+        if ($this->predefine_model->update_framestyles_item_status($id, $status)) {
+            $this->session->set_flashdata('success', trans("msg_updated"));
+            redirect(admin_url() . 'pre-framestyles');
+        } else {
+            $this->session->set_flashdata('error', trans("msg_error"));
+            redirect($this->agent->referrer());
+        }
     }
 
     /**
